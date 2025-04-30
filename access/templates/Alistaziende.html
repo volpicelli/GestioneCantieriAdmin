@@ -1,0 +1,21 @@
+{% extends "standard.html" %}
+{% load static %}
+{% block css %}
+  {{ block.super }}
+  <style>
+    .card .table {
+    font-size: 12px; 
+    }
+  </style>
+  {% endblock css %}
+
+  {% block main %}
+  {% include './listaziende_inc.html' %}
+  {% endblock main %}
+
+
+{% block javascript %}
+{{ block.super }}
+{% endblock javascript %}
+
+	  

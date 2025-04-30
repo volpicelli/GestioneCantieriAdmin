@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% block head %}
+    {% block meta %}
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+ 
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+{% endblock meta %}
+  <title>Metis Archive | {% block title %}{% endblock title %}</title>
+
+	 {% block stylesheets %}
+  
+	 {% include "css_inc.html" %}
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+	 {% endblock stylesheets %}
+{% endblock head %}
+</head>
+
+<body>
+
+	{% block header %}
+  <!-- ======= Header ======= -->
+  {% include "header_inc.html" %}
+	<!-- End Header -->
+{% endblock header %}
+	{% block sidebar %}
+  <!-- ======= Sidebar ======= -->
+ {% include "sidebar_inc.html" %}
+	<!-- End Sidebar-->
+{% endblock sidebar %}
+ 
+	{% block main %}
+  <!-- ======= Sidebar ======= -->
+ {% include "main_inc.html" %}
+	<!-- End Sidebar-->
+{% endblock main %}
+ 
+	<!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  {% block footer %}
+  <!-- ======= Sidebar ======= -->
+ {% include "footer_inc.html" %}
+	<!-- End Sidebar-->
+{% endblock footer %}
+ 
+ {% block javascript %}
+ {% include "javascript_inc.html" %}
+{% endblock javascript %}
+ 
+
+</body>
+
+</html>

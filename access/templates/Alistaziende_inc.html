@@ -1,0 +1,117 @@
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Aziende</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Aziende</a></li>
+        <li class="breadcrumb-item active">Lista</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+ 
+
+<section class="section">
+
+AAA
+  Azienda: {{azienda}}
+  Token : {{token}}
+
+    <div class="row align-items-top">
+      
+      
+      {% for a in aziende %}
+      
+      <div class="col-xl-3">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <h5>{{a.nome}}</h5>
+            <img width="60px" height="60px" src="/static/assets/img/{{a.logo}}" alt="Profile" class="rounded-circle">
+            <h6>{{a.ragione_sociale}}</h6>
+<!--
+            <div class=" mt-2">
+              <a href="#" class="">{{a.banca}}</i></a>
+              <a href="#" class="">{{a.email}}</a>
+             
+            </div>
+            -->
+            <form method="get" action="/access/selectazienda/{{a.id}}" >
+              {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">>></button>
+          </form>
+          </div>
+        </div>
+
+      </div>
+   
+      <!-- Card with an image on left 
+        <div class="card mb-3 col-md-3">
+          <div class="row g-0">
+            <div class="col-md-1">
+             
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">{{a.nome}}</h5>
+                <p class="card-text">
+                
+               
+             
+              <table class="table">
+                              
+                <tbody>
+                  <tr>
+                    <th scope="row">Descrizione</th>
+                    <td></td>
+                    <td>{{descrizione}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Email</th>
+                    <td></td>
+                    <td>{{a.email}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">PEC</th>
+                    <td></td>
+                    <td>{{a.pec}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Banca </th>
+                    <td></td>
+                    
+                    <td>{{a.banca}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IBAN</th>
+                  
+                    <td></td>
+                    <td>{{a.iban}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </p>
+             
+              </div>
+            </div>
+            <form method="get" action="/selectazienda/{{a.id}}" >
+              {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">Small</button>
+          </form>
+          </div>
+
+        </div>
+      -->
+      {% endfor %}
+    </div>
+
+    </div>
+  </section>
+
+</main><!-- End #main -->

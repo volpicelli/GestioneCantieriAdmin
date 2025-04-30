@@ -1,0 +1,354 @@
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+
+      <h1>{{context_azienda.nome}}</h1>
+      <h5>{{context_azienda.ragione_sociale}} - {{context_azienda.descrizione}}</h5>
+      <!--
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Components</li>
+          <li class="breadcrumb-item active">Cards</li>
+        </ol>
+      </nav>
+      Context: {{context_azienda.cogn_pf}}
+  Azienda:{{request.session.azienda}}
+  Token: {{request.session.token}}
+
+      -->
+    </div><!-- End Page Title 
+  
+    <section class="section">
+      <div class="row align-items-top">
+        -->
+
+  
+
+  <section class="section dashboard">
+    <div class="row">
+
+ <!-- Sales Card -->
+ <div class="col-xxl-2 col-md-6">
+  <div class="card info-card sales-card">
+<!--
+    <div class="filter">
+      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+        <li class="dropdown-header text-start">
+          <h6>Filter</h6>
+        </li>
+
+        <li><a class="dropdown-item" href="#">Today</a></li>
+        <li><a class="dropdown-item" href="#">This Month</a></li>
+        <li><a class="dropdown-item" href="#">This Year</a></li>
+      </ul>
+    </div>
+-->
+    <div id="cantieri" class="card-body">
+      <h5 class="card-title">Aziende</h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bx bx-building-house"></i>
+        </div>
+        <div class="ps-3">
+          <h6>aziende</h6>
+          <span class="text-success small pt-1 fw-bold"></span> 
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- End Sales Card -->
+
+<!-- Revenue Card -->
+<div class="col-xxl-2 col-md-6">
+  <div class="card info-card revenue-card">
+
+
+    <div id="fatture" class="card-body">
+      <h5 class="card-title">Clienti Commesse</h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-currency-euro"></i>
+        </div>
+        <div class="ps-3">
+          <h6>{{context_azienda.GetFatture|length}}</h6>
+          <span class="text-success small pt-1 fw-bold"></span> 
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- End Revenue Card -->
+
+<div class="col-xxl-2 col-xl-12">
+
+  <div class="card info-card customers-card">
+
+
+    <div id="personale" class="card-body">
+      <h5 class="card-title">Personale</h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-people"></i>
+        </div>
+        <div class="ps-3">
+          <h6> {{context_azienda.getPersonale|length}}</h6>
+          <span class="text-danger small pt-1 fw-bold"></span> 
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- End Customers Card -->
+
+<div class="col-xxl-2 col-xl-12">
+
+  <div class="card info-card customers-card">
+
+    <div id="ordini" class="card-body">
+      <h5 class="card-title">Ordini </h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-layout-text-window-reverse"></i>
+        </div>
+        <div class="ps-3">
+          <h6> {{context_azienda.getOrdini|length}}</h6>
+          <span class="text-danger small pt-1 fw-bold"></span> 
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- End Customers Card -->
+
+
+<div class="col-xxl-2 col-xl-12">
+
+  <div class="card info-card customers-card">
+
+    <div class="card-body">
+      <h5 class="card-title">Magazzino </h5>
+
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-bricks"></i>
+        </div>
+        <div class="ps-3">
+          <h6>  </h6>
+          <span class="text-danger small pt-1 fw-bold"></span> 
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- End Customers Card -->
+
+  <!-- Recent Sales -->
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+
+      <div class="filter">
+        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+          <li class="dropdown-header text-start">
+            <h6>Filter</h6>
+          </li>
+
+          <li><a class="dropdown-item" href="#">Today</a></li>
+          <li><a class="dropdown-item" href="#">This Month</a></li>
+          <li><a class="dropdown-item" href="#">This Year</a></li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <h5 class="card-title">Cantieri Aperti</h5>
+
+        <table class="table table-borderless ">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Decrizione</th>
+              <th scope="col">Ubicazione</th>
+              <th scope="col">Data Inizio Lavori</th>
+              <th scope="col">Data Fine Lavori</th>
+              <th scope="col">Valore Commessa</th>
+              <th scope="col">Stato</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for one in cantiere %}
+            {% if one.status %}
+            <tr>
+              <th scope="row"><a href="/cantieri/{{one.id}}">{{one.nome}}</a></th>
+              <td>{{one.descrizione}}</td>
+              <td>{{one.ubicazione}}</td>
+              <td>{{one.data_inizio_lavori}}</td>
+              <td>{{one.data_fine_lavori}}</td>
+              <td>{{one.valore_commessa}}</td>
+              <td><span class="badge bg-success">{% if one.status %} Aperto {% else %} Chiuso{% endif %}</span></td>
+            </tr>
+            {% endif %}
+            <!--
+            <tr>
+              <th scope="row"><a href="#">#2147</a></th>
+              <td>Bridie Kessler</td>
+              <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
+              <td>$47</td>
+              <td><span class="badge bg-warning">Pending</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2049</a></th>
+              <td>Ashleigh Langosh</td>
+              <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
+              <td>$147</td>
+              <td><span class="badge bg-success">Approved</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2644</a></th>
+              <td>Angus Grady</td>
+              <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
+              <td>$67</td>
+              <td><span class="badge bg-danger">Rejected</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2644</a></th>
+              <td>Raheem Lehner</td>
+              <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
+              <td>$165</td>
+              <td><span class="badge bg-success">Approved</span></td>
+            </tr>
+            -->
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div><!-- End Recent Sales -->
+
+
+
+   <!-- Recent Sales -->
+   <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+
+     
+
+      <div class="card-body">
+        <h5 class="card-title">Fatture in Scadenza</h5>
+
+        <table class="table table-borderless ">
+          <thead>
+            <tr>
+              <th scope="col">N. FATTURA</th>
+              <th scope="col">RAGIONE SOCIALE</th>
+              <th scope="col">DATA FATTURA</th>
+              <th scope="col">IMPORTO</th>
+              <th scope="col">DATA SCADENZA</th>
+              <th scope="col">PAGATO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for one in context_azienda.GetFattureInScadenza %}
+            <tr>
+              <th scope="row">{{one.n_fattura}}</th>
+              <td>{{one.ragione_sociale}}</td>
+              <td>{{one.data_fattura}}</td>
+              <td>{{one.importo}}</td>
+              <td>{{one.data_scadenza}}</td>
+              <td><span class="badge bg-success">{{one.pagato}}</span></td>
+            </tr>
+            <!--
+            <tr>
+              <th scope="row"><a href="#">#2147</a></th>
+              <td>Bridie Kessler</td>
+              <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
+              <td>$47</td>
+              <td><span class="badge bg-warning">Pending</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2049</a></th>
+              <td>Ashleigh Langosh</td>
+              <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
+              <td>$147</td>
+              <td><span class="badge bg-success">Approved</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2644</a></th>
+              <td>Angus Grady</td>
+              <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
+              <td>$67</td>
+              <td><span class="badge bg-danger">Rejected</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="#">#2644</a></th>
+              <td>Raheem Lehner</td>
+              <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
+              <td>$165</td>
+              <td><span class="badge bg-success">Approved</span></td>
+            </tr>
+            -->
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div><!-- End Recent Sales -->
+
+</section>
+<!--
+        {% for a in cantiere %}
+         
+         
+          <div class="col-lg-3">
+  
+         
+           <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{a.nome}}</h5>
+  
+              Stato : {% if a.status %} Aperto {% else %} Chiuso {% endif %}
+              Cliente : {{a.cliente.codcf}} <br>
+              Ut in ea error laudantium quas omnis officia. Sit sed praesentium voluptas. Corrupti inventore consequatur nisi necessitatibus modi consequuntur soluta id. Enim autem est esse natus assumenda. Non sunt dignissimos officiis expedita. Consequatur sint repellendus voluptas.
+              Quidem sit est nulla ullam. 
+            </div>
+          </div>
+          </div>
+          {% endfor %}
+  
+           
+            <div class="card">
+             <div class="card-body">
+               <h5 class="card-title">Default Card</h5>
+               Ut in ea error laudantium quas omnis officia. Sit sed praesentium voluptas. Corrupti inventore consequatur nisi necessitatibus modi consequuntur soluta id. Enim autem est esse natus assumenda. Non sunt dignissimos officiis expedita. Consequatur sint repellendus voluptas.
+               Quidem sit est nulla ullam. Suscipit debitis ullam iusto dolorem animi dolorem numquam. Enim fuga ipsum dolor nulla quia ut.
+               Rerum dolor voluptatem et deleniti libero totam numquam nobis distinctio. Sit sint aut. Consequatur rerum in.
+             </div>
+           </div>
+               
+        -->
+       
+  
+      </div>
+    </section>
+  
+  </main><!-- End #main -->
+  

@@ -1,0 +1,148 @@
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>{{context_azienda.nome}}</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Cantieri</a></li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <!-- 
+    Context: {{context_azienda.cogn_pf}}
+    Azienda:{{azienda}}
+    Token: {{request.session.token}}
+    -->
+    <br>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-end ">
+
+            <button type="button" class="btn btn-info mt-3">
+             <a href="/cantiere/add" target="_blank"> Nuovo Cantiere </a>
+            </button>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--
+    {{cantiere|length}} Fatture: 
+    {{fatture|length}}
+    Dal Context {{context_azienda.getFatture|length}}
+    -->
+    <h3>Cantiere Aperti</h3>
+    <section class="section">
+      <div class="row align-items-top">
+        
+        {% for a in cantiere %}
+         
+            {% if a.status %}
+            
+              <div class="col-lg-4">
+      
+              <!-- Default Card -->
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{a.nome}}</h5>
+                  <!-- Small tables -->
+                <table class="table table-sm">                  
+                  <tbody>
+                  <tr>
+                    <th scope="row">Manager</th>
+                    <td></td>
+                    <td>{{a.getResponsabile}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Indirizzo</th>
+                    <td></td>
+                    <td>{{a.ubicazione}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Commessa</th>
+                    <td></td>
+                    <td>{{a.valore_commessa}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Data Inizio</th>
+                    <td></td>
+                    <td>{{a.data_inizio_lavori}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Data Fine</th>
+                    <td></td>
+                    <td>{{a.data_fine_lavori}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Decrizione</th>
+                    <td> </td>
+                    <td>{{a.descrizione}}</td>
+                  </tr>
+                  
+                  
+                  </tbody>
+                </table>
+                <!-- End small tables -->
+
+  
+                  Cliente : {{a.cliente.codcf}} <br>
+                 
+                  </div>
+                </div><!-- End Default Card -->
+              </div>
+            {% endif %}
+          {% endfor %}
+  
+            <!-- Default Card -->
+            <div class="card">
+             <div class="card-body">
+               <h5 class="card-title">Cantieri</h5>
+               <!-- Small tables -->
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Indirizzo</th>
+                    <th scope="col">Valore Commessa</th>
+                    <th scope="col">Data Inizio</th>
+                    <th scope="col">Data Fine</th>
+                    <th scope="col">Stato</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Manager</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for a in cantiere %}
+                  <tr>
+                    <th scope="row"> <a href="/cantiere/{{a.id}}" >{{a.nome}}</a></th>
+                    <td>{{a.descrizione}}</td>
+                    <td>{{a.ubicazione}}</td>
+                    <td>{{a.valore_commessa}}</td>
+                    <td>{{a.data_inizio_lavori}}</td>
+                    <td>{{a.data_fine_lavori}}</td>
+                    <td>{{a.status}}</td>
+                    <td><a href="/cliente/{{a.cliente.id}}" >{{a.cliente}}</a> </td>
+                    <td><a href="/personale/{{a.getResponsabile.id}}" >{{a.getResponsabile}}</a></td>
+                  </tr>
+                  
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- End small tables -->
+             </div>
+           </div><!-- End Default Card -->
+               
+        
+       
+  
+      </div>
+    </section>
+  
+  </main><!-- End #main -->
+  

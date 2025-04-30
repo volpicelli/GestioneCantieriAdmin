@@ -1,0 +1,41 @@
+{% load static %}
+
+<!-- Vendor JS Files -->
+<script
+src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+crossorigin="anonymous"></script>
+  <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
+  <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/quill/quill.js' %}"></script>
+  <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'jquery-ui/jquery-ui.min.js' %}"></script>
+
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <script>
+    //find('.nav-item').
+    CURRENT_URL = window.location.href.split('#')[0].split('?')[0];
+    console.log('CURRENT_URL',CURRENT_URL)
+    var pathname = new URL(CURRENT_URL).pathname;
+    console.log('pathname',pathname)
+
+    $('#sidebar').find('a[href="' + pathname + '"]').addClass('active').parents('ul').slideDown();
+
+    $('#sidebar').find('a').on('click', function (ev) { 
+      console.log("pollo",$(this).parent())
+      //CURRENT_URL = window.location.href.split('#')[0].split('?')[0];
+      //var pathname = new URL(CURRENT_URL).pathname;
+
+      //console.log(pathname);
+      //console.log(CURRENT_URL);
+      //$('#sidebar').find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('active');
+      //$(this).addClass('active')
+    })
+  </script>

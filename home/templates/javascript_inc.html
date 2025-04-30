@@ -1,0 +1,39 @@
+<script>
+var frm = $('#mirologin');
+$("#mirologin").submit(function(el){
+
+    el.preventDefault();
+
+    $.ajax({
+  
+
+        type: frm.attr('method'),
+        url: frm.attr('action'),
+        data: frm.serialize(),
+      // get html file with entire #ajaxModalPopup html contents
+      //url: "/apirest/getlastingested",
+      //type: 'GET',
+  
+      // on success response function
+      success: function(jresponse) {
+  
+        // log response
+        console.log(jresponse);
+        
+       
+      },
+  
+      // on fail response function
+      error: function() {
+  
+        // console err
+        console.log("json error");
+        
+      },
+    }).done(function(){
+          // now show the modal
+          
+  
+        })
+    })
+</script>

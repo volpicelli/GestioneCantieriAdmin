@@ -1,0 +1,83 @@
+{% extends "standard.html" %}
+{% load static %}
+{% block css %}
+  {{ block.super }}
+  {% endblock css %}
+
+  {% block main %}
+  {% include './login_inc.html' %}
+  {% endblock main %}
+
+
+{% block javascript %}
+{{ block.super }}
+
+<script>
+  /*
+  var frm = $('#mirologin');
+  frm.submit(function(el){
+  
+      el.preventDefault();
+  
+      $.ajax({
+    
+  
+          type: frm.attr('method'),
+          url: frm.attr('action'),
+          data: frm.serialize(),
+        // get html file with entire #ajaxModalPopup html contents
+        //url: "/apirest/getlastingested",
+        //type: 'GET',
+    
+        // on success response function
+        success: function(jresponse) {
+    
+          // log response
+          
+          console.log(jresponse);
+          console.log(jresponse['azienda_id'].length)
+          //window.location='/'
+          if ( jresponse['azienda_id'].length > 1){
+            htmlselect = ' <option selected>Scegli quale Azienda</option> '
+            idx = 0 
+            for (let one in jresponse['azienda_id'])
+              
+              htmlselect+='<option value="'+jresponse['azienda_id'][one]+'">'+jresponse['azienda_name'][one]+'</option>'
+              idx+=1
+              $('#aziendaselect').html(htmlselect)
+
+            $('#smallModal').modal('show');
+            
+          } else {
+          window.location='/'
+          }
+         
+        },
+    
+        // on fail response function
+        error: function(err) {
+    
+          // console err
+          console.log(err['responseText']);
+          console.log("json error",err);
+          
+        },
+      }).done(function(){
+            // now show the modal
+            
+    
+          })
+      })
+      */
+  $("#aziendaselect").on('change', function() {
+  alert( this.value );
+  window.location='/';
+});
+  $("#selectazienda").click(function(e){
+    alert("POLLO")
+
+  })
+  </script>
+{% endblock javascript %}
+
+	  

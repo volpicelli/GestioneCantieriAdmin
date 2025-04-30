@@ -1,0 +1,14 @@
+{% extends "standard.html" %}
+{% load static %}
+{% block css %}
+  {{ block.super }}
+  {% endblock css %}
+
+  {% block main %}
+  {% include './cantieri_inc.html' %}
+  {% endblock main %}
+
+
+{% block javascript %}
+{{ block.super }}
+{% endblock javascript %}

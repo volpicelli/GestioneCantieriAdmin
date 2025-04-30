@@ -1,0 +1,28 @@
+{% extends "standard.html" %}
+{% load static %}
+{% block css %}
+  {{ block.super }}
+  {% endblock css %}
+
+  {% block main %}
+  {% include './main_inc.html' %}
+  {% endblock main %}
+
+
+{% block javascript %}
+{{ block.super }}
+<script>
+$('#cantieri').on('click',function(e){
+  window.location='/cantieri/list'
+})
+$('#personale').on('click',function(e){
+  window.location='/personale/list'
+})
+$('#fatture').on('click',function(e){
+  window.location='/fatture/list'
+})
+$('#ordini').on('click',function(e){
+  window.location='/ordini/list'
+})
+</script>
+{% endblock javascript %}
