@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from django.contrib.auth.models import User
-
+import re
 
 
 class Azienda(models.Model):
@@ -15,7 +15,7 @@ class Azienda(models.Model):
 
     nome = models.CharField(max_length=60, blank=True, null=True)
     logo = models.FileField(upload_to=set_path,null=True,blank=True)
-    codcf = models.CharField(max_length=60, blank=True, null=True,unique=True)
+    codcf = models.CharField(max_length=60, blank=True, null=True)#,unique=True)
     #current = models.BooleanField(null=True,default=False)
     descrizione = models.TextField(blank=True, null=True)
     ragione_sociale = models.CharField(max_length=100, blank=True, null=True)
@@ -206,10 +206,7 @@ class Cliente(models.Model):
     cogn_pf = models.CharField(max_length=40, blank=True, null=True)
     sesso = models.CharField(max_length=2, blank=True, null=True,choices=Sesso.choices)
 
-    #banca = models.CharField(max_length=40,blank=True, null=True)
-    #iban = models.CharField(max_length=40,blank=True, null=True)
-    #cantiere = models.ForeignKey(Cantiere,null=True,on_delete=models.CASCADE,related_name='cantiere_cliente')
-
+   
     azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='azienda_cliente')
 
     def __str__(self):
@@ -240,7 +237,6 @@ class Cantiere(models.Model):
     data_inizio_lavori = models.DateField(blank=True, null=True)
     data_fine_lavori = models.DateField(blank=True, null=True)
     cliente = models.ForeignKey(Cliente,null=True,on_delete=models.CASCADE,related_name='cliente_cantiere')
-    #azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='azienda_cantiere')
 
     def __str__(self):
         return self.nome
@@ -282,11 +278,7 @@ class Personale(models.Model):
     wage_netto =  models.FloatField(blank=True,null=True) 
 
     azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='azienda_personale')
-    #prova = models.ManyToManyField(
-    #    Cantiere,
-        #through="Assegnato_Cantiere",
-        #through_fields=("personale", "cantiere"),
-    #)
+    
     def __str__(self):
         return self.cognome
     
@@ -313,11 +305,13 @@ class Documenti(models.Model):
         """
         def set_path(self,filename):
             c = Cantiere.objects.get(pk=self.cantiere_id)
+            
             a = c.cliente.azienda.codcf
         
+            nome = re.sub(r'\W+', '', c.nome)
 
             #albumname= re.sub('[^a-zA-Z0-9]+', '', an.nome)
-            return str(a) +'/'+ filename # +albumname +'/'+filename
+            return str(a) +'/'+ nome +'/'+ filename # +albumname +'/'+filename
         
         data_inserimento = models.DateField(blank=True, null=True,auto_now_add=True)
         cantiere = models.ForeignKey(Cantiere,null=True,on_delete=models.CASCADE,related_name='cantiere_documenti')

@@ -3,7 +3,7 @@ from django.views.generic  import View,CreateView
 from django.template import loader
 from django.template import Template, Context
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
-from home.models import Azienda,UsersAzienda
+from home.models import Azienda,UsersAzienda,Fornitori
 from django.contrib.auth.models import User
 
 """
@@ -51,6 +51,9 @@ class InsertAziendaInit(View):
         a.logo=file
         a.save()
         az = Azienda.objects.filter(codcf=codcf)
+        # Devo inserire l'azienda anche tra i fornitori.
+        f = Fornitori(codcf=codcf,azienda=a,fmemo=" Azienda Fornitore di se stessa")
+        f.save()
         al =list(az.values())[0]
         #s = serializers.serialize("json",az)
         
