@@ -20,6 +20,12 @@ class FormAzienda(forms.ModelForm):
         super(FormAzienda, self).__init__(*args, **kwargs)
         #if instance is None:
         #self.fields['data_ordine'] = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
+        forms.TextInput(attrs={'class':'form-control', 'style':'font-size:13px;', 'required': True})
+
+        self.fields['nome'] =  forms.CharField(label="Nome",
+                                        widget=forms.TextInput(attrs={ 'required': True}))
+
+
         self.fields['descrizione'] =  forms.CharField(label="Descrizione", required=True,
                                                          widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2}))
         self.fields['fmemo'] =  forms.CharField(label="FMemo", required=True,

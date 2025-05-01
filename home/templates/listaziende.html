@@ -148,6 +148,8 @@ function addAzienda2UserForm(codcf,id){
 $( "#insertazienda" ).on( "submit", function(ev) {
   ev.preventDefault()
   //alert( "POLLO");
+  alert($("#insertazienda").valid() )
+  if ( $("#insertazienda").valid() ){ 
   $.ajax({
 
     url: "/insertazienda",
@@ -177,6 +179,10 @@ $( "#insertazienda" ).on( "submit", function(ev) {
         //window.location='/personale'
     });
 }
+else {
+  alert("NO SUBMIT")
+}
+}
 )
 
 
@@ -184,6 +190,7 @@ $( "#insertazienda" ).on( "submit", function(ev) {
 $( "#createuserazienda" ).on( "submit", function(ev) {
   ev.preventDefault()
   alert( "POLLO");
+ 
   $.ajax({
 
     url: "/createuserazienda",

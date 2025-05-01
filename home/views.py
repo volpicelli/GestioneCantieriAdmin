@@ -38,18 +38,23 @@ class InsertAziendaInit(View):
     def post(self,request):
         
         res = request.POST
-        file = request.FILES.get('logo')
         res2={}
         res2['post']= res
-        res2['file']=file.name
-
+        filelogo = False
+        if 'logo' in request.FILES:
+            file = request.FILES.get('logo')
+            res2['file']=file.name
+            filelogo=True
+        else:
+            res2['file']='No File logo'
         codcf = request.POST.get('codcf')
         nome = request.POST.get('nome')
 
         a= Azienda(codcf=codcf,nome=nome)
         a.save()
-        a.logo=file
-        a.save()
+        if filelogo:
+            a.logo=file
+            a.save()
         az = Azienda.objects.filter(codcf=codcf)
         # Devo inserire l'azienda anche tra i fornitori.
         f = Fornitori(codcf=codcf,azienda=a,fmemo=" Azienda Fornitore di se stessa")
