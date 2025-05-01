@@ -28,6 +28,7 @@ class Authenticate(View):
             login(request, user)
             request.session['login'] = user.username
             #template = loader.get_template('index.html')
+            """
             all = user.userazienda.all()
             az= []
             for one in all:
@@ -41,6 +42,12 @@ class Authenticate(View):
                 request.session['azienda'] = one.azienda.id
                 request.session['token'] = token.key
                 return HttpResponseRedirect('/home')
+            """
+            if user.is_superuser:
+
+                return HttpResponseRedirect('/')
+            else: 
+                return HttpResponseRedirect('/access/nouserenabled')
 
             #return HttpResponse(template.render(context, request))
         else:
@@ -87,4 +94,4 @@ class Login(View):
 class Logout(View):
     def get(self,request):
         logout(request)
-        return HttpResponseRedirect('/access')
+        return HttpResponseRedirect('/access/login')
