@@ -65,7 +65,7 @@ class CreateUserAzienda(View):
 
         res = request.POST
         az = request.POST.getlist('azienda')
-        username = request.POST.get('username')
+        username = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
         last_name = request.POST.get('last_name')

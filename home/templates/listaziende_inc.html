@@ -27,19 +27,19 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#step-3">
+        <a class="nav-link disabled" href="#step-3" aria-disabled="true">
           <span class="num">3</span>
           Associa Utenti ad Aziende
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#step-4">
+        <a class="nav-link disabled " href="#step-4" aria-disabled="true">
           <span class="num">4</span>
           Banche
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="#step-5">
+        <a class="nav-link disabled" href="#step-5" aria-disabled="true">
           <span class="num">5</span>
           Confirm Order
         </a>
@@ -137,8 +137,12 @@
         <div class="col-5">
           Crea Account di Accesso <br><br>
           {% csrf_token %}
+          <label>Email  </label> 
+          {{ formutenti.email  }} 
+          <!--
           <label>Username  </label> 
           {{ formutenti.username  }} 
+           -->
           <br>
           <label>Password  </label> 
           {{ formutenti.password  }} 
@@ -151,8 +155,7 @@
           {{ formutenti.last_name  }} 
           <label>Nome  </label> 
           {{ formutenti.first_name  }} 
-          <label>Email  </label> 
-          {{ formutenti.email  }} 
+         
          
           
         

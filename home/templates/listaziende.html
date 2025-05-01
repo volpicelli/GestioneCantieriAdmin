@@ -298,7 +298,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
         // Leave step event is used for validating the forms
         $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
             // Validate only on forward movement  
-            alert(currentStepIdx + '    ' + nextStepIdx)
+           // alert(currentStepIdx + '    ' + nextStepIdx)
             if (stepDirection == 'forward') {
               let form = document.getElementById('form-' + (currentStepIdx + 1));
               if (form) {
