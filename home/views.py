@@ -98,12 +98,18 @@ class InsertAzienda(CreateView):
         context ={}
         #context['form']= FormAzienda() 
         #context['ordini'] = a.getOrdini()
+
+        if not request.user.is_authenticated:        
+            return HttpResponseRedirect('/access/login')
+
+
         az = Azienda.objects.all()
 
         context={'aziende':az,'form':FormAzienda(),'formutenti':FormUtenti()}
         
 
         return render(request, "listaziende.html", context)
+       
     
 
 
