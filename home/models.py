@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 import re
 
-
 class Azienda(models.Model):
     def set_path(self,filename):
             #c = Cantiere.objects.get(pk=self.cantiere_id)
@@ -42,6 +41,21 @@ class Azienda(models.Model):
     class Meta:
         managed = True
         db_table = 'azienda'
+
+class  ClientiGestioneCantieri(models.Model):
+    nome = models.CharField(max_length=40, blank=True, null=True)
+    cognome = models.CharField(max_length=40, blank=True, null=True)
+    telefono = models.CharField(max_length=40, blank=True, null=True)
+    cellulare = models.CharField(max_length=40, blank=True, null=True)
+    email = models.CharField(max_length=40, blank=True, null=True)
+   
+    aziende =  models.ManyToManyField(Azienda)
+    def __str__(self):
+        return self.cognome
+    class Meta:
+        managed = True
+        db_table = 'clientigestionecantieri'
+
 
 class UsersAzienda(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE,related_name='userazienda')
