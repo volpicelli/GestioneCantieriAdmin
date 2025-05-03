@@ -11,7 +11,7 @@ class FormClientiGestione(forms.ModelForm):
     class Meta:
         model = ClientiGestioneCantieri
         fields = "__all__"
-        exclude = ('aziende',)
+        exclude = ('aziende','telefono')
     
     def __init__(self,*args,**kwargs):
         

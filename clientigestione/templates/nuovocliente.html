@@ -148,6 +148,41 @@ function addAzienda2UserForm(codcf,id){
   $('#listaaziende').append(html)
 }
 
+$( "#nuovocliente" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  alert( "POLLO");
+  //alert($("#insertazienda").valid() )
+  //if ( $("#nuovocliente").valid() ){ 
+  $.ajax({
+
+    url: "/nuovocliente",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse['cognme'],jresponse['nome']);
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+
+
+})
+
+
 $( "#insertazienda" ).on( "submit", function(ev) {
   ev.preventDefault()
   //alert( "POLLO");
