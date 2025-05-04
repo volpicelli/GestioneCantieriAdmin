@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from home.models import ClientiGestioneCantieri
-from django.views.generic.list import ListView
+from home.models import ClientiGestioneCantieri,Azienda
+from django.views.generic.list import ListView,View
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView 
 from .form_clientigestione import FormClientiGestione
@@ -8,6 +8,11 @@ from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 
 #from .clientigestione_serializer import ClientiGestioneserializer
 # Create your views here.
+class TestLoadModal(View):
+    def get(self,request):
+        res={'pollo':'POLLO'}
+
+        return JsonResponse(res,safe=False)
 
 class ClientiGestione(ListView):
     model = ClientiGestioneCantieri
@@ -16,8 +21,9 @@ class ClientiGestione(ListView):
     def get(self,request):
 
         cgc  = ClientiGestioneCantieri.objects.all()
+        az = Azienda.objects.all()
 
-        context={'clientigestione':cgc}
+        context={'clientigestione':cgc,'aziende': az}
         
 
         return render(request, self.template_name, context)

@@ -18,6 +18,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate,login
 from .form_aziende import FormAzienda
 from .form_utenti import FormUtenti
+from clientigestione.form_clientigestione import FormClientiGestione
+from django.core import serializers
+
+#from clientigestione.clientigestione_serializer import ClientiGestioneserializer
+from home.models import ClientiGestioneCantieri
 #from .azienda_serializer import Aziendaserializer
 from django.core import serializers
 # Create your views here.
@@ -110,14 +115,36 @@ class InsertAzienda(CreateView):
 
         az = Azienda.objects.all()
 
-        context={'aziende':az,'form':FormAzienda(),'formutenti':FormUtenti()}
+        formcliente = FormClientiGestione()
+
+        context={'aziende':az,'form':FormAzienda(),'formutenti':FormUtenti(),'formcliente':formcliente}
         
 
-        return render(request, "listaziende.html", context)
+        return render(request, "init.html", context)
        
+class InsertNuovoCliente(CreateView):
+    def post(self,request):
+
+        res = request.POST
+        #az = request.POST.getlist('azienda')
+        cognome = request.POST.get('cognome')
+        nome = request.POST.get('nome')
+        cellulare = request.POST.get('cellulare')
+        email = request.POST.get('email')
+
+        cgc = ClientiGestioneCantieri(cognome=cognome,nome=nome,cellulare=cellulare,email=email)
+        cgc.save()
+        #res['az'] = az
+        serialized_obj = serializers.serialize('json', [ cgc, ])
+
+        res2={}
+        res2['q']=res
+        res2['a']=serialized_obj
     
+        return JsonResponse(res2,safe=False)
 
 
+    """
     def post(self,request,cantiere_id=None):
         #id = request.POST.get['cliente']
         #
@@ -146,7 +173,7 @@ class InsertAzienda(CreateView):
         # we can provide the url pattern arguments as arguments to redirect function
         return HttpResponseRedirect('/ordine/update/'+str(ordine.id))
         #return redirect('pollo')
-  
+    """
 
 
 class IndexHome(View):

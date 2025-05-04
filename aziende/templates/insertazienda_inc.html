@@ -1,0 +1,257 @@
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Inserisci Azienda</h1>
+   
+  </div><!-- End Page Title -->
+<br><br>
+ <!-- SmartWizard html -->
+ 
+
+
+   
+
+    <!-- AZIENDE -->
+
+    <div  class="tab-pane" role="tabpanel" >
+      <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-5"></div>
+        <div class="col-3">
+        </div>
+      </div>
+      
+
+         <form id="insertaziendaMA" class="form-control" action="" method="POST" enctype="multipart/form-data"  > 
+          {% csrf_token %}
+          <div class="row">
+
+            <div class="col-4">
+ 
+               <label>Nome </label> 
+                {{ form.nome  }} 
+                <br>
+                <label>CODCF </label> 
+                {{ form.codcf  }} 
+                <br>
+                <label>Ragione Sociale </label> 
+                {{ form.ragione_sociale  }} 
+                <label>Codice Fiscale </label> 
+                {{ form.codfisc  }} 
+                <label>Partita IVA </label> 
+                {{ form.partiva  }} 
+                <label>Nome Persona </label> 
+                {{ form.nome_pf  }} 
+                <label>Cognome Persona </label> 
+                {{ form.cogn_pf  }} 
+                <label>Email </label> 
+                {{ form.email  }} 
+                <br>
+                <label>Resp Rap </label> 
+                {{ form.resprap  }} 
+                <label>F Memo </label> 
+                {{ form.fmemo  }} 
+                 
+            </div>
+              <div class="col-5">
+                <label>Logo </label> 
+                {{ form.logo  }} 
+
+                <label>Descrizione </label> 
+                {{ form.descrizione  }} 
+                <label>Indirizzo </label> 
+                {{ form.indirizzo  }} 
+                <label>CAP </label> 
+                {{ form.cap  }}  
+                <label>Local  </label> 
+                {{ form.local  }}  
+                <label>Provincia  </label> 
+                {{ form.prov }} 
+                <label>Telefono </label> 
+                {{ form.telefono }} 
+                <label>Cellulare </label> 
+                {{ form.cellulare  }} 
+                <label>Pec </label> 
+                {{ form.pec }} 
+                <label>FAX </label> 
+                {{ form.fax }} 
+                 
+              </div>
+              <div class="col-3">
+                <ol id="list-aziende-inserite" class="list-group list-group-numbered ">
+                 
+                </ol>
+              </div>
+            
+          </div>
+          
+            
+            <br><br>
+              <button class="btn btn-primary" type="submit">Send</button>
+              <Button type="reset" class="btn btn-warning">RESET </Button>
+            </form>
+    </div>
+ 
+   
+    <!-- CREA ACCOUNT DI ACCESSO PER AZIENDE -->
+   
+     
+     
+      
+
+ 
+
+
+<br /> &nbsp;
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="confirmModalLabel">Order Placed</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      Congratulations! Your order is placed.
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" onclick="closeModal()">Ok, close and reset</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<section class="section">
+<div class="row">
+  <div class="col-5">
+    <!--
+    <form class="form-control" action = "" method = "post">
+      {% csrf_token %}
+      {{form.as_table}}
+      <button class="btn btn-primary" type="submit">Send</button>
+  </form>
+  -->
+  </div>
+  <div class="col-5">
+    Crea Account di Accesso 
+    <!--
+    <form class="form-control" action = "" method = "post">
+      {% csrf_token %}
+      {{formutenti}}
+      <button class="btn btn-primary" type="submit">Send</button>
+  </form>
+    -->
+  </div>
+</div>
+  
+<br><br><br>
+<br><br><br>
+<br><br><br>
+  Azienda PORCA: 
+  Token : 
+
+    <div class="row align-items-top">
+      
+      
+      {% for a in aziende %}
+      
+      <div class="col-xl-3">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <h5>{{a.nome}} AAAA</h5>
+            <img src="/static/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <h6>{{a.ragione_sociale}}</h6>
+<!--
+            <div class=" mt-2">
+              <a href="#" class="">{{a.banca}}</i></a>
+              <a href="#" class="">{{a.email}}</a>
+             
+            </div>
+            -->
+            <form method="get" action="/selectazienda/{{a.id}}" >
+              {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">>></button>
+          </form>
+          </div>
+        </div>
+       
+      </div>
+   
+      <!-- Card with an image on left 
+        <div class="card mb-3 col-md-3">
+          <div class="row g-0">
+            <div class="col-md-1">
+             
+            </div>
+            <div class="col-md-10">
+              <div class="card-body">
+                <h5 class="card-title">{{a.nome}}</h5>
+                <p class="card-text">
+                
+               
+             
+              <table class="table">
+                              
+                <tbody>
+                  <tr>
+                    <th scope="row">Descrizione</th>
+                    <td></td>
+                    <td>{{descrizione}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Email</th>
+                    <td></td>
+                    <td>{{a.email}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">PEC</th>
+                    <td></td>
+                    <td>{{a.pec}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="row">Banca </th>
+                    <td></td>
+                    
+                    <td>{{a.banca}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">IBAN</th>
+                  
+                    <td></td>
+                    <td>{{a.iban}}</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+            </p>
+             
+              </div>
+            </div>
+            <form method="get" action="/selectazienda/{{a.id}}" >
+              {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">Small</button>
+          </form>
+          </div>
+
+        </div>
+      -->
+      {% endfor %}
+    </div>
+
+    </div>
+  </section>
+
+</main><!-- End #main -->
