@@ -3,7 +3,7 @@
 {% block stylesheets %}
   {{ block.super }}
 
-  <link href="{% static  'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+  <link href="{% static 'DataTables/datatables.min.css' %}" rel="stylesheet" type="text/css" />
 
   <style>
     .card .table {
@@ -40,10 +40,13 @@ label.valid {
 <script type="text/javascript" src="{% static  'jquery_validator/dist/jquery.validate.min.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/localization/messages_it.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/additional-methods.min.js' %}"></script>
-<script src="{% static  'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+<script src="{% static  'DataTables/datatables.min.js' %}"></script>
 <script src="{% static  'autocomplete/js/bootstrap-autocomplete.min.js' %}"></script>
 
 <script type="text/javascript">
+
+
+new DataTable('#example');
 
 document.addEventListener('DOMContentLoaded', e => {
         $('#input-datalist').autocomplete()
@@ -69,29 +72,7 @@ var autoaz = []
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
-  /**
-   * Initiate Datatables
-   */
-  const datatables = select('.datatable', true)
-  datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable, {
-      perPageSelect: [5, 10, 15, ["All", -1]],
-      columns: [{
-          select: 2,
-          sortSequence: ["desc", "asc"]
-        },
-        {
-          select: 3,
-          sortSequence: ["desc"]
-        },
-        {
-          select: 4,
-          cellClass: "green",
-          headerClass: "red"
-        }
-      ]
-    });
-  })
+  
 function updateModal(response) {
     var myModal = $("#aggiungiaziendamodal");
     console.log("UPDATE",response)

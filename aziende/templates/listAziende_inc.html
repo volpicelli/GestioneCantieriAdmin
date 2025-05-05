@@ -12,7 +12,7 @@
   </div><!-- End Page Title -->
 
 
- <table id="example" class="display datatable">
+ <table id="example" class="display table table-bordered table-striped dataTable">
   <thead>
     <tr>
         <th>Nome</th>
@@ -20,7 +20,8 @@
         <th>Ragione Sociale</th>
         <th>Codice Fiscale</th>
         <th>Email</th>
-        <th> </th>
+        <th> Proprietario </th>
+        <th> Utente </th>
     </tr>
 </thead>
 <tbody>
@@ -31,8 +32,9 @@
   <td>{{one.ragione_sociale}}</td>
   <td>{{one.codice_fiscale}}</td>
   <td>{{one.email}}</td>
-  <td>
+  <td> {{one.cgc_aziende.all.0.cognome}}
   </td>
+  <td>{{one.aziendauser.all.0.user}}</td>
   <!--
   <td> 
     

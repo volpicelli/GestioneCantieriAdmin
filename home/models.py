@@ -49,7 +49,7 @@ class  ClientiGestioneCantieri(models.Model):
     cellulare = models.CharField(max_length=40, blank=True, null=True)
     email = models.CharField(max_length=40, blank=True, null=True)
    
-    aziende =  models.ManyToManyField(Azienda)
+    aziende =  models.ManyToManyField(Azienda,related_name="cgc_aziende")
     def __str__(self):
         return self.cognome
     class Meta:

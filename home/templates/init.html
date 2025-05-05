@@ -51,6 +51,7 @@ $('#password, #confirmpassword').on('keyup', function () {
     $('#message').html('Not Matching').css('color', 'red');
 });
 */
+let nuovocliente = false
 
 jQuery.validator.setDefaults({
   debug: true,
@@ -147,24 +148,25 @@ function addAzienda2UserForm(codcf,id){
 
 $( "#nuovocliente" ).on( "submit", function(ev) {
   ev.preventDefault()
-  alert( "POLLO");
+  //alert( "POLLO");
   //alert($("#insertazienda").valid() )
   //if ( $("#nuovocliente").valid() ){ 
   $.ajax({
 
     url: "/nuovocliente",
     type: 'POST',
-    //dataType: "json",
-    cache: false,
+    dataType: "json",
+    //cache: false,
     contentType: false,
     processData: false,
     data: new FormData(this), //$('#inser
     success: function(jresponse) {
       // log response
-      console.log("VAI",jresponse['cognme'],jresponse['nome']);
-      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
-      //addAziendeInserite(jresponse['codcf'])
-
+      ss= JSON.parse(jresponse)
+      console.log("VAI",JSON.parse(jresponse));
+      console.log(ss[0]['pk'])
+      nuovocliente = {'id':ss[0]['pk'],'cognome': ss[0]['fields']['cognome'] }
+      console.log(nuovocliente)
 
     },
     // on fail response function

@@ -141,7 +141,7 @@ class InsertNuovoCliente(CreateView):
         res2['q']=res
         res2['a']=serialized_obj
     
-        return JsonResponse(res2,safe=False)
+        return JsonResponse(serialized_obj,safe=False)
 
 
     """

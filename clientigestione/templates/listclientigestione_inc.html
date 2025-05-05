@@ -12,13 +12,14 @@
   </div><!-- End Page Title -->
 
 
- <table id="example" class="display datatable">
+ <table id="example" class="display table table-bordered table-striped dataTable">
   <thead>
     <tr>
         <th>Cognome</th>
         <th>Nome</th>
         <th>Cellulare</th>
         <th>Email</th>
+        <th> Accounts</th>
         <th>Aziende</th>
         <th> </th>
     </tr>
@@ -30,6 +31,7 @@
   <td>{{one.nome}}</td>
   <td>{{one.cellulare}}</td>
   <td>{{one.email}}</td>
+  <td>utente</td>
   <td>
     {% for a in one.aziende.all %}
      <a href="" >{{a.nome}} </a> &nbsp;&nbsp;
