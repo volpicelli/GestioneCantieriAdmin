@@ -1,0 +1,79 @@
+
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Crea Nuovo Utente per Azienda </h1>
+    
+  </div><!-- End Page Title -->
+
+
+<br /> &nbsp;
+</div>
+
+
+
+
+<section class="section">
+<form id="nuovoutente" method="post" action="" >
+
+<div class="row">
+   <div class="col-4 ">
+      <fieldset class="border p-2">
+          <legend  class="float-none w-auto">Utente</legend>
+      
+      
+          {% csrf_token %}
+          <label>Email  </label> 
+          {{ form.email  }} 
+          <!--
+          <label>Username  </label> 
+          {{ formutenti.username  }} 
+          -->
+          <br>
+          <label>Password  </label> 
+          {{ form.password  }} 
+          <br>
+          <label>Confirm Password</label>
+          <input type="password" name="confirmpassword" maxlength="150" class="form-control"  id="confirmpassword">
+          <br>
+          <div id="message"></div>
+          <label>Cognome  </label> 
+          {{ form.last_name  }} 
+          <label>Nome  </label> 
+          {{ form.first_name  }} 
+      </fieldset>
+    </div>
+
+    <div class="col-3  d-flex align-items-center">
+      <div class="alert alert-secondary bg-secondary text-light border-0 alert-dismissible fade show" role="alert">
+        Per questa Azienda >>
+      </div>
+    </div>
+    <div class="col-4 d-flex align-items-center">
+      <fieldset class="border p-2">
+        <legend  class="float-none w-auto">Azienda</legend>
+
+        
+    <div class="autocomplete">
+        <input type="text" name="azienda" id="searchInput" required placeholder="Inserisci un termine...">
+        <ul id="suggestions"></ul>
+    </div>
+
+           
+      </fieldset>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-sm"> CREA </button>
+
+</div>
+</form>
+
+
+    <div class="row align-items-top">
+      
+    </div>
+
+    </div>
+  </section>
+
+</main><!-- End #main -->

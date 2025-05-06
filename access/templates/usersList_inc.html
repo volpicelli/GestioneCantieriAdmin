@@ -2,10 +2,10 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Aziende</h1>
+    <h1>Utenti Aziende</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Aziende</a></li>
+        <li class="breadcrumb-item"><a href="index.html">Utenti Aziende</a></li>
         <li class="breadcrumb-item active">Lista</li>
       </ol>
     </nav>
@@ -15,26 +15,29 @@
  <table id="example" class="display table table-bordered table-striped dataTable">
   <thead>
     <tr>
+        <th>Utente</th>
+        <th>Cognome</th>
         <th>Nome</th>
-        <th>codcf</th>
-        <th>Ragione Sociale</th>
-        <th>Codice Fiscale</th>
         <th>Email</th>
-        <th> Cliente/Proprietario </th>
-        <th> Utente </th>
+        <th>Azienda</th>
     </tr>
 </thead>
 <tbody>
-{% for one in aziende %}
+{% for one in users %}
 <tr>
-  <td>{{one.nome}}</td>
-  <td>{{one.codcf}}</td>
-  <td>{{one.ragione_sociale}}</td>
-  <td>{{one.codice_fiscale}}</td>
-  <td>{{one.email}}</td>
-  <td> {{one.cgc_aziende.all.0.cognome}}
+  <td>{{one.username}}</td>
+  <td> {{one.last_name}}</td>
+  <td> {{one.first_name}}</td>
+  <td> {{one.email}}</td>
+  <td>{% for ua in one.userazienda.all %}
+      
+      <a href="" >  {{ua.azienda}} </a> <br>
+   
+    {% endfor %}
+
+
   </td>
-  <td>{{one.aziendauser.all.0.user}}</td>
+  
   <!--
   <td> 
     

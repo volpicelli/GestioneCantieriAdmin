@@ -1,0 +1,287 @@
+{% extends "standard.html" %}
+{% load static %}
+{% block stylesheets %}
+  {{ block.super }}
+
+
+  <style>
+
+.autocomplete {
+    position: relative;
+    width: 300px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    z-index: 1;
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+    .card .table {
+    font-size: 12px; 
+    }
+    
+
+    #field { margin-left: .5em; float: left; }
+#field, label { float: left; font-family: Arial, Helvetica, sans-serif; font-size: small; }
+br { clear: both; }
+input { border: 1px solid black; margin-bottom: .5em;  }
+input.error { border: 1px solid red; }
+label.error {
+	background: url('/static/jquery_validator/images/unchecked.gif') no-repeat;
+	padding-left: 16px;
+	margin-left: .3em;
+}
+label.valid {
+	background: url('/static/jquery_validator/images/checked.gif') no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+  </style>
+  {% endblock stylesheets %}
+
+  {% block main %}
+  {% include './createuser_inc.html' %}
+  {% endblock main %}
+
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="{% static  'jquery_validator/dist/jquery.validate.min.js' %}"></script>
+<script type="text/javascript" src="{% static  'jquery_validator/dist/localization/messages_it.js' %}"></script>
+<script type="text/javascript" src="{% static  'jquery_validator/dist/additional-methods.min.js' %}"></script>
+
+<script type="text/javascript">
+
+
+const searchInput = document.getElementById('searchInput');
+const suggestionsList = document.getElementById('suggestions');
+const apiUrl = '/access/remote'; // Sostituisci con l'URL della tua API
+
+searchInput.addEventListener('input', async function() {
+    const query = this.value.trim();
+
+    // Pulisci i suggerimenti precedenti
+    suggestionsList.innerHTML = '';
+
+    if (query.length < 1) { // Inizia la ricerca con almeno 2 caratteri
+        return;
+    }
+
+    try {
+        const response = await fetch(`${apiUrl}?q=${query}`);
+        if (!response.ok) {
+            throw new Error(`Errore nella richiesta: ${response.status}`);
+        }
+        const data = await response.json();
+        displaySuggestions(data);
+    } catch (error) {
+        console.error('Errore durante la fetch:', error);
+        suggestionsList.innerHTML = '<li class="error">Errore nel caricamento dei suggerimenti</li>';
+    }
+});
+
+function displaySuggestions(suggestions) {
+    if (suggestions && suggestions.length > 0) {
+        suggestions.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.nome; // Assumi che l'oggetto abbia una proprietà 'nome'
+            li.addEventListener('click', function() {
+                searchInput.value = this.textContent;
+                suggestionsList.innerHTML = ''; // Pulisci i suggerimenti dopo la selezione
+            });
+            suggestionsList.appendChild(li);
+        });
+    } else {
+        const li = document.createElement('li');
+        li.textContent = 'Nessun risultato trovato';
+        suggestionsList.appendChild(li);
+    }
+}
+
+/*
+$('#password, #confirmpassword').on('keyup', function () {
+  if ($('#password').val() == $('#confirmpassword').val()) {
+    $('#message').html('Matching').css('color', 'green');
+  } else 
+    $('#message').html('Not Matching').css('color', 'red');
+});
+*/
+
+jQuery.validator.setDefaults({
+  debug: true,
+  success: "valid"
+});
+
+jQuery.validator.addMethod("email", function(value, element) {
+  // allow any non-whitespace characters as the host part
+  return this.optional( element ) || /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@(?:\S{1,63})$/.test( value );
+}, 'Indirizzo email non valido.');
+
+
+function checkCODCF(val){
+  let resp="POLLO"
+  //console.log("TEST",/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@(?:\S{1,63})$/.test( val ))
+  $.ajax({
+
+  url: "/checkcodcf/"+val,
+  type: 'GET',
+  async: false,
+  success: function(jresponse) {
+      // log response
+      console.log(jresponse);
+        resp=jresponse['success'] 
+
+        console.log("RESP",resp)
+      
+
+    },
+    error: function() {
+      // console err
+      console.log(" error"); 
+    }
+  })
+  return resp
+}
+
+jQuery.validator.addMethod("codcf", function(value, element) {
+  // allow any non-whitespace characters as the host part
+  console.log(value)
+  dd = checkCODCF(value)  ;
+  console.log("FUNCTION",dd)
+
+  return dd
+}, 'Questo codice azienda esiste gia` ');
+
+
+
+function addAziendeInserite(codcf){
+  html = '<li class="list-group-item d-flex justify-content-between align-items-start">\
+                  <div class="ms-2 me-auto">\
+                    <div class="fw-bold">'+codcf+'</div>\
+                  </div>\
+                 </li>'
+  $("#list-aziende-inserite").append(html)
+}
+function addAzienda2UserForm(codcf,id){
+
+  html = '<div class="form-check"> '
+              + codcf +
+              '<label class="form-check-label" for="aziendaCheck1"> \
+              </label> \
+              <input name="azienda" class="form-check-input" value="'+id+'" type="checkbox" id="aziendaCheck1"> \
+            </div>'
+            console.log("HTML",html)
+  $('#listaaziende').append(html)
+}
+
+$( "#nuovocliente" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  alert( "POLLO");
+  //alert($("#insertazienda").valid() )
+  //if ( $("#nuovocliente").valid() ){ 
+  $.ajax({
+
+    url: "/nuovocliente",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse['cognme'],jresponse['nome']);
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+
+
+})
+
+
+
+
+$( "#createuserazienda" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  alert( "POLLO");
+ 
+  $.ajax({
+
+    url: "/createuserazienda",
+    type: 'POST',
+    data: $('#createuserazienda').serialize(),
+    // on success response function
+    success: function(jresponse) {
+      // log response
+      console.log(jresponse);
+    },
+    // on fail response function
+    error: function() {
+      // console err
+      console.log(" error"); 
+    },
+    }).done(function(){
+        // now show the modal
+        console.log("FATTO")
+        //window.location='/personale'
+    });
+}
+
+
+);
+
+
+
+    
+
+    
+
+  
+    $(function() {
+        // Leave step event is used for validating the forms
+        
+       
+       
+
+    });
+</script>
+{% endblock javascript %}
+
+	  
