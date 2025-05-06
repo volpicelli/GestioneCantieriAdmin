@@ -53,12 +53,7 @@ document.addEventListener('DOMContentLoaded', e => {
     }, false);
 
 var autoaz = []
-    {% for one in aziende %}
-    dd={}
-    dd['label']='{{one.nome}}'
-    dd['value'] = '{{one.id}}'
-    autoaz.push('{{one.nome}}')
-    {% endfor %}
+   
 
    
     console.log(autoaz)
