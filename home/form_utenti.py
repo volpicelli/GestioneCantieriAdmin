@@ -10,7 +10,7 @@ class FormUtenti(forms.ModelForm):
     class Meta:
         model = User
         fields = "__all__"
-        exclude = ('last_login','is_superuser','date_joined','groups','user_permissions','is_active','is_staff')
+        exclude = ('last_login','is_superuser','date_joined','groups','user_permissions','is_active','is_staff','username')
     
     def __init__(self,*args,**kwargs):
         
@@ -19,7 +19,9 @@ class FormUtenti(forms.ModelForm):
         super(FormUtenti, self).__init__(*args, **kwargs)
         #if instance is None:
         #self.fields['data_ordine'] = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
-        #self.fields['email']=forms.CharField(widget=forms.CharField(attrs={'id':'email'})) #,label='', required=False)
+        self.fields['password']=forms.CharField(widget=forms.PasswordInput(attrs={'id':'password', 'required':True})) #,label='', required=False)
+        self.fields['email']=forms.CharField(widget=forms.EmailInput(attrs={'id':'email', 'required':True})) #,label='', required=False)
+        self.fields['last_name']=forms.CharField(widget=forms.TextInput(attrs={'id':'last_name', 'required':True})) #,label='', required=False)
         #self.fields['email']= orms.EmailField(widget=forms.EmailInput(attrs={'class': 'forms-group__input'}))
         #self.fields['email'].widgets.attrs['id'] = 'pollo'
         for field in self.fields.values():

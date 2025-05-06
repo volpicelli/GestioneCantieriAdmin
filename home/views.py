@@ -84,6 +84,10 @@ class CreateUserAzienda(View):
 
         user = User.objects.create_user(username=username, password=password)
         user.save()
+        group_azienda = Group.objects.get(name="Azienda")
+        user.groups.add(group_azienda)
+        user.save()
+        
         #res['az'] = az
         for one in az:
             a = Azienda.objects.get(id=one)
