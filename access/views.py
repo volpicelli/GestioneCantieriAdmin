@@ -107,7 +107,7 @@ class CreateUserXAzienda(CreateView):
     def post(self,request):
 
         res = request.POST
-        #az = request.POST('azienda')
+        az = request.POST.get('azienda')
         username = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
@@ -115,25 +115,34 @@ class CreateUserXAzienda(CreateView):
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
 
-        return JsonResponse(res,safe=False)
+        #return JsonResponse(res,safe=False)
 
-        user = User.objects.create_user(username=username, password=password)
+        user = User.objects.create_user(username=username, 
+                                        password=password,
+                                        last_name=last_name,
+                                        first_name=first_name,
+                                        email=email)
         user.save()
-        group_azienda = Group.objects.get(name="Azienda")
+        group_azienda = Group.objects.get(name="Aziende")
         user.groups.add(group_azienda)
         user.save()
+        azienda = Azienda.objects.get(nome=az)
+        ua = UsersAzienda(user=user,azienda=azienda)
+        ua.save()
+
         
         #res['az'] = az
         #for one in az:
         #a = Azienda.objects.get(id=one)
         #ua = UsersAzienda(azienda=a,user=user)
         #ua.save()
-        res2={}
-        res2['q']=res
-        res2['a']=az
+        #res2={}
+        #res2['q']=res
+        #res2['a']=az
     
-        return JsonResponse(res2,safe=False)
+        #return JsonResponse(res2,safe=False)
 
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))      
 
 class SelectAzienda(View):
     def get(self,request,azienda_id)  :

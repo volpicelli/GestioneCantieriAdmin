@@ -19,7 +19,7 @@
         <th>Nome</th>
         <th>Cellulare</th>
         <th>Email</th>
-        <th> Accounts</th>
+        <th> Username/Utenti</th>
         <th>Aziende</th>
         <th> </th>
     </tr>
@@ -30,8 +30,11 @@
   <td>{{one.cognome}}</td>
   <td>{{one.nome}}</td>
   <td>{{one.cellulare}}</td>
-  <td>{{one.email}}</td>
-  <td>utente</td>
+  <td><a href="/clienti/update/{{one.id}}" > {{one.email}} </a></td>
+  <td>{% for two in one.getusers %}
+    {{two}}<br>
+    {% endfor %}
+  </td>
   <td>
     {% for a in one.aziende.all %}
      <a href="" >{{a.nome}} </a> &nbsp;&nbsp;

@@ -55,8 +55,18 @@ class  ClientiGestioneCantieri(models.Model):
     class Meta:
         managed = True
         db_table = 'clientigestionecantieri'
-
-
+    
+    @property
+    def getusers(self):
+        a = self.aziende.all()
+        user=set()
+        for one in a:
+            au = one.aziendauser.all()
+            for two in au:
+                user.add(two.user.username)
+        #return user = Users.objects.create_user(username=username, password=password)
+        return user
+        
 class UsersAzienda(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE,related_name='userazienda')
     azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='aziendauser')

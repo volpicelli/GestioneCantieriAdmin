@@ -3,7 +3,7 @@ from django.views.generic  import View,CreateView
 from django.template import loader
 from django.template import Template, Context
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
-from home.models import Azienda,UsersAzienda,Fornitori
+from home.models import Azienda,UsersAzienda,Fornitori,ClientiGestioneCantieri
 from django.contrib.auth.models import User
 
 """
@@ -45,27 +45,108 @@ class InsertAziendaInit(View):
         res = request.POST
         res2={}
         res2['post']= res
+        cliente = request.POST.get('cliente',None)
         filelogo = False
+        
         if 'logo' in request.FILES:
             file = request.FILES.get('logo')
             res2['file']=file.name
             filelogo=True
         else:
             res2['file']='No File logo'
+       
         codcf = request.POST.get('codcf')
-        nome = request.POST.get('nome')
+        nome = request.POST.get('nome',None)
+        ragione_sociale = request.POST.get('ragione_sociale',None)
+        codfisc = request.POST.get('codfisc',None)
+        partiva = request.POST.get('partiva',None)
+        nome_pf = request.POST.get('nome_pf',None)
+        cogn_pf = request.POST.get('cogn_pf',None)
+        email = request.POST.get('email',None)
+        resprap = request.POST.get('resprap',None)
+        fmemo = request.POST.get('fmemo',None)
+        descrizione = request.POST.get('descrizione',None)
+        indirizzo = request.POST.get('indirizzo',None)
+        cap = request.POST.get('cap',None)
+        local = request.POST.get('local',None)
+        prov = request.POST.get('prov',None)
+        telefono = request.POST.get('telefono',None)
+        cellulare = request.POST.get('cellulare',None)
+        pec = request.POST.get('pec',None)
+        fax = request.POST.get('fax',None)
 
-        a= Azienda(codcf=codcf,nome=nome)
+        
+
+        a= Azienda(nome=nome)
         a.save()
+        a.ragione_sociale=ragione_sociale
+        a.codfisc = codfisc
+        a.partiva = partiva
+        a.nome_pf = nome_pf
+        a.cogn_pf = cogn_pf
+        a.email = email
+        a.resprap = resprap
+        a.fmemo = fmemo
+        a.descrizione = descrizione
+        a.indirizzo = indirizzo
+        a.cap = cap
+        a.local = local
+        a.prov = prov
+        a.telefono = telefono
+        a.cellulare = cellulare
+        a.pec = pec
+        a.fax = fax        
+
+
+        try:
+            ax=Azienda.objects.get(codcf=codcf)
+            esiste=True
+            codcf=codcf + '_' + str(a.id)
+            
+            #return JsonResponse({'success':False},safe=False)
+        except:
+            esiste=False
+            #return JsonResponse({'success':True},safe=False)
+
+        a.codcf=codcf
+
+        a.save()
+
         if filelogo:
             a.logo=file
             a.save()
+
         az = Azienda.objects.filter(codcf=codcf)
+        
+        id = int(cliente)
+        cgc = ClientiGestioneCantieri.objects.get(id=id)
+        cgc.aziende.add(a)
+        cgc.save()
         # Devo inserire l'azienda anche tra i fornitori.
         f = Fornitori(codcf=codcf,azienda=a,fmemo=" Azienda Fornitore di se stessa")
         f.save()
+
+        f.ragione_sociale=ragione_sociale
+        f.codfisc = codfisc
+        f.partiva = partiva
+        f.nome_pf = nome_pf
+        f.cogn_pf = cogn_pf
+        f.email = email
+        f.resprap = resprap
+        f.fmemo = fmemo
+        f.descrizione = descrizione
+        f.indirizzo = indirizzo
+        f.cap = cap
+        f.local = local
+        f.prov = prov
+        f.telefono = telefono
+        f.cellulare = cellulare
+        f.pec_fe = pec
+        f.fax = fax 
+        f.save()
+
         al =list(az.values())[0]
-        #s = serializers.serialize("json",az)
+        #s = serializers.serialize("json",cgc)
         
         return JsonResponse(al,safe=False)
 
@@ -87,7 +168,7 @@ class CreateUserAzienda(View):
         group_azienda = Group.objects.get(name="Azienda")
         user.groups.add(group_azienda)
         user.save()
-        
+
         #res['az'] = az
         for one in az:
             a = Azienda.objects.get(id=one)

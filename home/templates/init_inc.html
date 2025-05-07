@@ -87,7 +87,18 @@
 
          <form id="insertazienda" class="form-control" action="/insertazienda" method="POST" enctype="multipart/form-data"  > 
           {% csrf_token %}
-          <div class="row">
+
+            <div class="row  bg-primary text-white"> 
+              <div class="col-7 text-center mt-2" >
+                <h5>La/e  Azienda/e inserite saranno associate  al cliente </h5> 
+              </div>
+              <div class="col-5 text-start mt-2">
+               <h4> <span id="clienteinserito">CIVERA </span> </h4>
+              </div>
+            <input id="inputcliente" type="hidden" name="cliente" value="">
+            </div>
+            <br/><br/>
+            <div class="row">
 
             <div class="col-4">
  

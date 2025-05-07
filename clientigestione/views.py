@@ -3,6 +3,7 @@ from home.models import ClientiGestioneCantieri,Azienda
 from django.views.generic.list import ListView,View
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView 
+from django.urls import reverse_lazy
 from .form_clientigestione import FormClientiGestione
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 
@@ -19,6 +20,8 @@ class ClientiGestione(ListView):
     template_name = "listClientiGestione.html"
 
     def get(self,request):
+        if not request.user.is_authenticated:        
+            return HttpResponseRedirect('/access/login')
 
         cgc  = ClientiGestioneCantieri.objects.all()
         az = Azienda.objects.all()
@@ -32,6 +35,7 @@ class UpdateClienteGestione(UpdateView):
     model = ClientiGestioneCantieri
     template_name = "nuovocliente.html"
     form_class = FormClientiGestione
+    success_url = reverse_lazy('listclienti')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,6 +67,9 @@ class NuovoClienteGestione(CreateView):
     template_name = "nuovocliente.html"
 
     def get(self,request):
+        if not request.user.is_authenticated:        
+            return HttpResponseRedirect('/access/login')
+            
         form = FormClientiGestione()
     
         return render(request, 'nuovocliente.html', {'form': form})

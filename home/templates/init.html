@@ -115,13 +115,13 @@ jQuery.validator.addMethod("codcf", function(value, element) {
   console.log("FUNCTION",dd)
 
   return dd
-}, 'Questo codice azienda esiste gia` ');
+}, 'Questo codice azienda  esiste gia`, se non lo cambi ne verra` generato uno aggiungendo un numero ');
 
 $( "#createuserazienda" ).validate({
   rules: {
     password: "required",
     confirmpassword: {
-      equalTo: "#id_password"
+      equalTo: "#password"
     }
   }
 });
@@ -166,6 +166,11 @@ $( "#nuovocliente" ).on( "submit", function(ev) {
       console.log("VAI",JSON.parse(jresponse));
       console.log(ss[0]['pk'])
       nuovocliente = {'id':ss[0]['pk'],'cognome': ss[0]['fields']['cognome'] }
+      console.log(ss[0]['fields']['cognome'])
+      $("#clienteinserito").html(ss[0]['fields']['cognome'])
+      $("#inputcliente").val(ss[0]['pk'])
+      
+
       console.log(nuovocliente)
 
     },
