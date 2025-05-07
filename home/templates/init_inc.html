@@ -95,17 +95,22 @@
               <div class="col-5 text-start mt-2">
                <h4> <span id="clienteinserito">CIVERA </span> </h4>
               </div>
-            <input id="inputcliente" type="hidden" name="cliente" value="">
+              <input id="inputcliente" type="hidden" name="cliente" value="">
             </div>
             <br/><br/>
+            I campi con (*) sono richiesti e devono essere inseriti per poter proseguire.
+            <br/>
+            <br/>
+            <br/>
             <div class="row">
 
             <div class="col-4">
- 
-               <label>Nome </label> 
+               <label>Nome (*)</label> 
                 {{ form.nome  }} 
                 <br>
-                <label>CODCF </label> 
+                <label>CODCF (*) <br>
+                  Deve essere unico. Se questo codice azienda esiste gia`, ne verra` generato uno aggiungendo il suo numero identificativo.
+                </label> 
                 {{ form.codcf  }} 
                 <br>
                 <label>Ragione Sociale </label> 

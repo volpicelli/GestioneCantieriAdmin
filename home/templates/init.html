@@ -110,12 +110,28 @@ function checkCODCF(val){
 
 jQuery.validator.addMethod("codcf", function(value, element) {
   // allow any non-whitespace characters as the host part
+  var validator = this;
   console.log(value)
-  dd = checkCODCF(value)  ;
+  invalidChars = value.match(/[^A-Za-z0-9_]/g);
+  console.log(invalidChars)
+  if ( invalidChars ) { 
+    //dd= {'success':false}
+    //var errors = {};
+    //errors[element.name] =  "pollo"
+    //validator.showErrors(errors);
+    $.validator.messages.codcf = "I caratteri "+invalidChars + " non sono ammessi";
+    dd=false
+    //return {'success':false};
+  }
+  else {
+   // dd= {'success':true};
+    dd=true
+  }
+  //dd = checkCODCF(value)  ;
   console.log("FUNCTION",dd)
 
   return dd
-}, 'Questo codice azienda  esiste gia`, se non lo cambi ne verra` generato uno aggiungendo un numero ');
+}, $.validator.messages.codcf ) //.validator.format('Questo codice {0} azienda gia`, se non lo cambi ne verra` generato uno aggiungendo un numero ',invalidChars));
 
 $( "#createuserazienda" ).validate({
   rules: {
