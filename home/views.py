@@ -43,9 +43,11 @@ class InsertAziendaInit(View):
     def post(self,request):
         
         res = request.POST
+        #return JsonResponse(res,safe=False)
         res2={}
         res2['post']= res
         cliente = request.POST.get('cliente',None)
+        cliente_id = request.POST.get('cliente_id',None)
         filelogo = False
         
         if 'logo' in request.FILES:
@@ -54,8 +56,7 @@ class InsertAziendaInit(View):
             filelogo=True
         else:
             res2['file']='No File logo'
-       
-        codcf = request.POST.get('codcf')
+        
         nome = request.POST.get('nome',None)
         ragione_sociale = request.POST.get('ragione_sociale',None)
         codfisc = request.POST.get('codfisc',None)
@@ -76,9 +77,26 @@ class InsertAziendaInit(View):
         fax = request.POST.get('fax',None)
 
         
+        
 
         a= Azienda(nome=nome)
         a.save()
+        #Check se codcf esiste gia` 
+        # Se esiste `salva e aggiungi a codcf '_<ID>'
+        # 
+        codcf = request.POST.get('codcf')
+        try:
+            ax=Azienda.objects.get(codcf=codcf)
+            esiste=True
+            codcf=codcf + '_' + str(a.id)
+            
+            #return JsonResponse({'success':False},safe=False)
+        except:
+            esiste=False
+            #return JsonResponse({'success':True},safe=False)
+        
+        a.codcf=codcf
+
         a.ragione_sociale=ragione_sociale
         a.codfisc = codfisc
         a.partiva = partiva
@@ -97,19 +115,6 @@ class InsertAziendaInit(View):
         a.pec = pec
         a.fax = fax        
 
-
-        try:
-            ax=Azienda.objects.get(codcf=codcf)
-            esiste=True
-            codcf=codcf + '_' + str(a.id)
-            
-            #return JsonResponse({'success':False},safe=False)
-        except:
-            esiste=False
-            #return JsonResponse({'success':True},safe=False)
-
-        a.codcf=codcf
-
         a.save()
 
         if filelogo:
@@ -118,7 +123,7 @@ class InsertAziendaInit(View):
 
         az = Azienda.objects.filter(codcf=codcf)
         
-        id = int(cliente)
+        id = int(cliente_id)
         cgc = ClientiGestioneCantieri.objects.get(id=id)
         cgc.aziende.add(a)
         cgc.save()

@@ -6,6 +6,42 @@
   <link href="{% static 'dist/css/smart_wizard_all.css' %}" rel="stylesheet" type="text/css" />
 
   <style>
+.autocomplete {
+    position: relative;
+    width: 300px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    z-index: 1;
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
     .card .table {
     font-size: 12px; 
     }
@@ -43,6 +79,60 @@ label.valid {
 <script type="text/javascript" src="{% static  'jquery_validator/dist/additional-methods.min.js' %}"></script>
 
 <script type="text/javascript">
+
+const searchInput = document.getElementById('searchInput');
+const searchInputID = document.getElementById('searchInputID');
+const suggestionsList = document.getElementById('suggestions');
+const apiUrl = '/clienti/remote'; // Sostituisci con l'URL della tua API
+
+searchInput.addEventListener('input', async function() {
+    const query = this.value.trim();
+
+    // Pulisci i suggerimenti precedenti
+    suggestionsList.innerHTML = '';
+
+    if (query.length < 1) { // Inizia la ricerca con almeno 2 caratteri
+        return;
+    }
+
+    try {
+        const response = await fetch(`${apiUrl}?q=${query}`);
+        if (!response.ok) {
+            throw new Error(`Errore nella richiesta: ${response.status}`);
+        }
+        const data = await response.json();
+        displaySuggestions(data);
+    } catch (error) {
+        console.error('Errore durante la fetch:', error);
+        suggestionsList.innerHTML = '<li class="error">Errore nel caricamento dei suggerimenti</li>';
+    }
+});
+
+function displaySuggestions(suggestions) {
+    if (suggestions && suggestions.length > 0) {
+        suggestions.forEach(item => {
+            const li = document.createElement('li');
+            console.log("ITEM",item)
+            li.textContent = item.cognome; // Assumi che l'oggetto abbia una proprietà 'nome'
+            li.addEventListener('click', function() {
+                searchInput.value = this.textContent;
+                suggestionsList.innerHTML = ''; // Pulisci i suggerimenti dopo la selezione
+                searchInputID.value = item.id;
+            });
+            suggestionsList.appendChild(li);
+        });
+    } else {
+        const li = document.createElement('li');
+        li.textContent = 'Nessun risultato trovato';
+        suggestionsList.appendChild(li);
+    }
+}
+
+
+
+
+
+
 /*
 $('#password, #confirmpassword').on('keyup', function () {
   if ($('#password').val() == $('#confirmpassword').val()) {
@@ -185,6 +275,7 @@ $( "#nuovocliente" ).on( "submit", function(ev) {
       console.log(ss[0]['fields']['cognome'])
       $("#clienteinserito").html(ss[0]['fields']['cognome'])
       $("#inputcliente").val(ss[0]['pk'])
+      $(".sceglicliente").addClass('d-none');
       
 
       console.log(nuovocliente)
@@ -370,7 +461,13 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
         $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIdx, nextStepIdx, stepDirection) {
           console.log(currentStepIdx,nextStepIdx) 
           // Validate only on forward movement  
-           // alert(currentStepIdx + '    ' + nextStepIdx)
+
+           alert(currentStepIdx + '    ' + nextStepIdx)
+           if ( nuovocliente ) {
+            alert("NUOVO CLIENTE")
+            $(".showcliente").removeClass('d-none');
+
+           }
            /*
             if (stepDirection == 'forward') {
               let form = document.getElementById('form-' + (currentStepIdx + 1));

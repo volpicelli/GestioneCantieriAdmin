@@ -14,6 +14,7 @@ class Azienda(models.Model):
 
     nome = models.CharField(max_length=60, blank=True, null=True)
     logo = models.FileField(upload_to=set_path,null=True,blank=True)
+    avatar = models.ImageField(upload_to=set_path,null=True,blank=True)
     codcf = models.CharField(max_length=60, blank=True, null=True)#,unique=True)
     #current = models.BooleanField(null=True,default=False)
     descrizione = models.TextField(blank=True, null=True)
@@ -66,7 +67,28 @@ class  ClientiGestioneCantieri(models.Model):
                 user.add(two.user.username)
         #return user = Users.objects.create_user(username=username, password=password)
         return user
-        
+
+class AvatarUser(models.Model):
+    def set_path(self,filename):
+        #a=self.user.userazienda.all()
+
+        return str(self.user.username) +'/'+ filename # +albumname +'/'+filename
+
+    avatar = models.ImageField(upload_to=set_path,null=True,blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='avatar_user')
+
+    class Meta:
+        managed = True
+        db_table = 'avataruser'
+    def __str__(self):
+        return self.user.username
+    def get_url(self):
+        return self.avatar.url
+    def get_path(self):
+        return self.avatar.path
+    def get_user(self): 
+        return self.user.username
+
 class UsersAzienda(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE,related_name='userazienda')
     azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='aziendauser')
@@ -253,6 +275,19 @@ class Cliente(models.Model):
 #        db_table = 'aziendeclienti'
 
 class Cantiere(models.Model):
+
+    def set_path(self,filename):
+            #c = Cantiere.objects.get(pk=self.cantiere_id)
+            #a = c.cliente.azienda.codcf
+            ac = self.cliente.azienda.codcf
+            id = str(self.id)
+
+            #albumname= re.sub('[^a-zA-Z0-9]+', '', an.nome)
+            return ac +'/cantiere_'+ id+'/'+filename # +albumname +'/'+filename
+
+
+    avatar = models.ImageField(upload_to=set_path,null=True,blank=True)
+    
     nome   = models.CharField(max_length=40, blank=True, null=True)
     descrizione = models.TextField(blank=True, null=True)
     ubicazione = models.CharField(max_length=100, blank=True, null=True)

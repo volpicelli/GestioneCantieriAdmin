@@ -60,6 +60,19 @@ class UpdateClienteGestione(UpdateView):
     #    return render(request, 'nuovocliente.html', {'form': form})
     
 
+class RemoteautocompleteCliente(View):
+    def get(self,request):
+        q = request.GET.get('q')
+        resp=[]
+        res = ClientiGestioneCantieri.objects.filter(cognome__icontains=q)#.values_list('cognome')
+        for one in res:
+            a={}
+            a['cognome']=one.cognome
+            a['id']=one.id
+            resp.append(a)
+
+
+        return JsonResponse(resp,safe=False)
 
 
 class NuovoClienteGestione(CreateView):

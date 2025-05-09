@@ -23,8 +23,10 @@ class FormAzienda(forms.ModelForm):
         forms.TextInput(attrs={'class':'form-control', 'style':'font-size:13px;', 'required': True})
 
         self.fields['nome'] =  forms.CharField(label="Nome",
-                                        widget=forms.TextInput(attrs={ 'required': True}))
+                                        widget=forms.TextInput(attrs={ 'id':'nomeazienda','required': True}))
 
+        self.fields['email']=forms.CharField(widget=forms.EmailInput(attrs={'id':'emailazienda', 'required':True})) #,label='', required=False)
+        self.fields['cellulare']=forms.CharField(widget=forms.TextInput(attrs={'id':'cellulareazienda', 'required':True})) #,label='', required=False)
 
         self.fields['descrizione'] =  forms.CharField(label="Descrizione", required=True,
                                                          widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2}))
