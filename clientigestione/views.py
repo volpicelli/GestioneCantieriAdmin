@@ -67,7 +67,7 @@ class RemoteautocompleteCliente(View):
         res = ClientiGestioneCantieri.objects.filter(cognome__icontains=q)#.values_list('cognome')
         for one in res:
             a={}
-            a['cognome']=one.cognome
+            a['cognome']=one.cognome + ' (' + one.email + ')'
             a['id']=one.id
             resp.append(a)
 

@@ -273,9 +273,9 @@ $( "#nuovocliente" ).on( "submit", function(ev) {
       console.log(ss[0]['pk'])
       nuovocliente = {'id':ss[0]['pk'],'cognome': ss[0]['fields']['cognome'] }
       console.log(ss[0]['fields']['cognome'])
-      $("#clienteinserito").html(ss[0]['fields']['cognome'])
-      $("#inputcliente").val(ss[0]['pk'])
-      $(".sceglicliente").addClass('d-none');
+      //$("#clienteinserito").html(ss[0]['fields']['cognome'])
+      //$("#inputcliente").val(ss[0]['pk'])
+      //$(".sceglicliente").addClass('d-none');
       
 
       console.log(nuovocliente)
@@ -462,12 +462,14 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
           console.log(currentStepIdx,nextStepIdx) 
           // Validate only on forward movement  
 
-           alert(currentStepIdx + '    ' + nextStepIdx)
+          /* 
+          alert(currentStepIdx + '    ' + nextStepIdx)
            if ( nuovocliente ) {
             alert("NUOVO CLIENTE")
             $(".showcliente").removeClass('d-none');
 
            }
+            */
            /*
             if (stepDirection == 'forward') {
               let form = document.getElementById('form-' + (currentStepIdx + 1));
@@ -547,7 +549,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
                 enableDoneStateNavigation: true // Enable/Disable the done state navigation
             },
         });
-        
+        /*
         $("#state_selector").on("change", function() {
             $('#smartwizard').smartWizard("setState", [$('#step_to_style').val()], $(this).val(), !$('#is_reset').prop("checked"));
             return true;
@@ -557,7 +559,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
             $('#smartwizard').smartWizard("setStyle", [$('#step_to_style').val()], $(this).val(), !$('#is_reset').prop("checked"));
             return true;
         });
-        
+        */
     });
 </script>
 {% endblock javascript %}

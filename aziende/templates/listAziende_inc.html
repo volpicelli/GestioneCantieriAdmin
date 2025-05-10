@@ -28,7 +28,7 @@
 {% for one in aziende %}
 <tr>
   <td>{{one.nome}}</td>
-  <td>{{one.codcf}}</td>
+  <td><a href="/aziende/update/{{one.id}}" > {{one.codcf}} </a> </td>
   <td>{{one.ragione_sociale}}</td>
   <td>{{one.codice_fiscale}}</td>
   <td>{{one.email}}</td>

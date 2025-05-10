@@ -63,8 +63,9 @@
     <!-- CLIENTE -->
 
     <div id="step-0" class="tab-pane" role="tabpanel" aria-labelledby="step-0">
-      <p>Inserisci un nuovo cliente se non esiste altrimenti vai al passo successivo.</p>
-
+      <h4>
+      <p>Inserisci un nuovo cliente.<br>Altrimenti clicca "Next" e vai al passo successivo.</p>
+    </h4>
       <form id="nuovocliente" method="post" action="" >
         {% csrf_token %}
         {{formcliente}}
@@ -78,7 +79,9 @@
     <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
       <div class="row">
         <div class="col-4">
-          Inserisci una o piu' Aziende 
+          <h4>
+          <p>Inserisci una o piu' Aziende </p>
+        </h4>
         </div>
         <div class="col-5"></div>
         <div class="col-3">
@@ -90,18 +93,18 @@
          <form id="insertazienda" class="form-control" action="/insertazienda" method="POST" enctype="multipart/form-data"  > 
           {% csrf_token %}
 
-          <div class="row sceglicliente">
+           <div class="row sceglicliente">
               <div class="col-4"">
-              Scegli il Cliente propietario 
-              </div>"
+              Scegli il Cliente, proprietario dell'Azienda/e che devi inserire
+              </div>
               <div class="col-4"">
 
                 <fieldset class="border p-2">
-                  <legend  class="float-none w-auto">Cliente</legend>
+                  <legend  class="float-none w-auto">Cliente/Proprietario</legend>
 
                   
                   <div class="autocomplete">
-                    <input type="text" name="cliente" id="searchInput" required placeholder="Inserisci un termine...">
+                    <input type="text" name="cliente" id="searchInput" required placeholder="Inserisci un carattere...">
                     <input type="hidden" name="cliente_id" id="searchInputID" >
                     <ul id="suggestions"></ul>
                   </div>
@@ -109,8 +112,8 @@
                     
                 </fieldset>
               </div>
-          </div>
-
+            </div>
+            <!--
             <div class="row  bg-primary text-white showcliente d-none"> 
               <div class="col-7 text-center mt-2" >
                 <h5>La/e  Azienda/e inserite saranno associate  al cliente </h5> 
@@ -120,6 +123,7 @@
               </div>
               <input id="inputcliente" type="hidden" name="cliente_id" value="">
             </div>
+            -->
             <br/><br/>
             I campi con (*) sono richiesti e devono essere inseriti per poter proseguire.
             <br/>
@@ -192,6 +196,9 @@
               <button class="btn btn-primary" type="submit">Send</button>
               <Button type="reset" class="btn btn-warning">RESET </Button>
             </form>
+            <br/>
+            <br/>
+            <br/>
     </div>
  
     <!-- ASSOCIA AZIENDE A CLIENTE
