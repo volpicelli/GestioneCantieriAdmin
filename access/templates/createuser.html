@@ -3,6 +3,7 @@
 {% block stylesheets %}
   {{ block.super }}
 
+  <link href="{% static 'chosen/chosen.css' %}" rel="stylesheet" type="text/css" />
 
   <style>
 
@@ -76,9 +77,11 @@ label.valid {
 <script type="text/javascript" src="{% static  'jquery_validator/dist/jquery.validate.min.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/localization/messages_it.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="{% static  'chosen/chosen.jquery.min.js' %}"></script>
 
 <script type="text/javascript">
 
+$(".chosen-select").chosen({width: "95%"})
 
 const searchInput = document.getElementById('searchInput');
 const suggestionsList = document.getElementById('suggestions');

@@ -107,7 +107,7 @@ class CreateUserXAzienda(CreateView):
     def post(self,request):
 
         res = request.POST
-        az = request.POST.get('azienda')
+        az = request.POST.getlist('azienda')
         username = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
@@ -115,7 +115,7 @@ class CreateUserXAzienda(CreateView):
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
 
-        #return JsonResponse(res,safe=False)
+        #return JsonResponse(az,safe=False)
 
         user = User.objects.create_user(username=username, 
                                         password=password,
@@ -126,9 +126,10 @@ class CreateUserXAzienda(CreateView):
         group_azienda = Group.objects.get(name="Aziende")
         user.groups.add(group_azienda)
         user.save()
-        azienda = Azienda.objects.get(nome=az)
-        ua = UsersAzienda(user=user,azienda=azienda)
-        ua.save()
+        for one in az:
+            azienda = Azienda.objects.get(pk=one)
+            ua = UsersAzienda(user=user,azienda=azienda)
+            ua.save()
 
         
         #res['az'] = az

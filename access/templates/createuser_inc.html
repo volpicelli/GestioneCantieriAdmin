@@ -2,7 +2,7 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Crea Nuovo Utente per Azienda </h1>
+    <h1>Crea Nuovo Utente per Azienda/e </h1>
     
   </div><!-- End Page Title -->
 
@@ -18,9 +18,11 @@
         <div class="col-4 ">
             <fieldset class="border p-2">
                 <legend  class="float-none w-auto">Utente</legend>
-            
-            
                 {% csrf_token %}
+
+
+                Lo username sara` l'email <br/>
+                
                 <label>Email  </label> 
                 {{ form.email  }} 
                 <!--
@@ -42,12 +44,20 @@
             </fieldset>
           </div>
 
-          <div class="col-3  d-flex align-items-center">
+          <div class="col-4  d-flex align-items-center">
             <div class="alert alert-secondary bg-secondary text-light border-0 alert-dismissible fade show" role="alert">
-              Per questa Azienda >>
+              Puo` accedere a questa/e Azienda/e >>
             </div>
           </div>
           <div class="col-4 d-flex align-items-center">
+
+            <select name="azienda" data-placeholder="Scegli Azienda..." class="chosen-select form-control" multiple tabindex="4">
+              <option> </option>
+              {% for a in aziende %}
+                <option value="{{a.id}}">{{a.nome}}</option>
+              {% endfor %}
+            </select>  
+<!--
             <fieldset class="border p-2">
               <legend  class="float-none w-auto">Azienda</legend>
 
@@ -59,6 +69,7 @@
 
                 
             </fieldset>
+            -->
           </div>
 
           <button type="submit" class="btn btn-primary btn-sm"> CREA </button>
