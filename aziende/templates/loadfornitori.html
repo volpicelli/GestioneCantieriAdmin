@@ -98,6 +98,7 @@ $( "#form-clienti" ).on( "submit", function(ev) {
     success: function(jresponse) {
       // log response
       console.log("VAI",jresponse);
+      $("#messaggioclienti").html(jresponse['messaggio'])
       //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
       //addAziendeInserite(jresponse['codcf'])
 
@@ -135,6 +136,8 @@ $( "#form-fornitori" ).on( "submit", function(ev) {
     success: function(jresponse) {
       // log response
       console.log("VAI",jresponse);
+      $("#messaggiofornitori").html(jresponse['messaggio'])
+
       //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
       //addAziendeInserite(jresponse['codcf'])
 
