@@ -2,9 +2,12 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
+    {% if 'update' in request.path %}
+    <h1>Modifica  Azienda</h1>
+      {% else %}
     <h1>Inserisci Azienda</h1>
-   
-  </div><!-- End Page Title -->
+    {% endif %}
+    
 <br><br>
  <!-- SmartWizard html -->
  
