@@ -87,7 +87,7 @@
         </div>
         <div class="col-5"></div>
         <div class="col-3">
-          Aziende Inserite: 
+         <h4> Aziende Inserite: </h4>
         </div>
       </div>
       
@@ -152,7 +152,7 @@
                 {{ form.nome_pf  }} 
                 <label>Cognome Persona </label> 
                 {{ form.cogn_pf  }} 
-                <label>Email </label> 
+                <label>Email (*) </label> 
                 {{ form.email  }} 
                 <br>
                 <label>Resp Rap </label> 
@@ -221,7 +221,7 @@
 
       <div class="row">
         <div class="col-5">
-          Crea Account di Accesso <br><br>
+          <h4>Crea Account di Accesso </h4><br><br>
           {% csrf_token %}
           <label>Email  </label> 
           {{ formutenti.email  }} 
@@ -250,7 +250,9 @@
 
         </div>
         <div class="col-5">
-          Permetti l'accesso a queste Aziende:
+          <h4>
+          Permetti l'accesso alle  Aziende appena inserite :
+        </h4>
           <br><br>
           <div id="listaaziende" class="aziende">
             <!--
