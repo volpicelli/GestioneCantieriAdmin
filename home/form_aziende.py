@@ -20,61 +20,26 @@ class FormAzienda(forms.ModelForm):
         super(FormAzienda, self).__init__(*args, **kwargs)
         #if instance is None:
         #self.fields['data_ordine'] = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
-        forms.TextInput(attrs={'class':'form-control', 'style':'font-size:13px;', 'required': True})
+        
+        #forms.TextInput(attrs={'class':'form-control', 'style':'font-size:13px;', 'required': True})
 
         self.fields['nome'] =  forms.CharField(label="Nome",
                                         widget=forms.TextInput(attrs={ 'id':'nomeazienda','required': True}))
+        self.fields['codcf'] =  forms.CharField(label="Codice Unico",required= True,
+                                        widget=forms.TextInput(attrs={ 'id':'codcf','required': True}))
 
         self.fields['email']=forms.CharField(widget=forms.EmailInput(attrs={'id':'emailazienda', 'required':True})) #,label='', required=False)
-        self.fields['cellulare']=forms.CharField(widget=forms.TextInput(attrs={'id':'cellulareazienda', 'required':True})) #,label='', required=False)
+        
+        self.fields['cellulare']=forms.CharField(label="Cellulare",required=False,
+                                    widget=forms.TextInput(attrs={'id':'cellulareazienda'})) #,label='', required=False)
 
-        self.fields['descrizione'] =  forms.CharField(label="Descrizione", required=True,
-                                                         widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2}))
-        self.fields['fmemo'] =  forms.CharField(label="FMemo", required=True,
-                                                         widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2}))
+        self.fields['descrizione'] =  forms.CharField(label="Descrizione", required=False,
+                                                         widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2,'required': False}))
+        self.fields['fmemo'] =  forms.CharField(label="FMemo", required=False,
+                                                         widget=forms.Textarea(attrs={'style': 'max-width: 100%','rows':2,'required': False}))
         #self.fields['codcf'] = forms.CharField(label="PIPPO")
 
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
-        #fa=Fornitori.objects.filter(azienda=self.azienda)
-        #self.fields['fornitore'] = forms.ModelChoiceField(label="Fornitore", required=False,queryset=fa,
-        #                                         widget=forms.Select(choices=fa,
-        #                                                             attrs={'style': 'max-width: 100%'}))
-
-        #ca = az.getCantieri()
-        #self.fields['cantiere'] = forms.ModelChoiceField(label="Cantiere", required=False,queryset=ca,
-        #                                        widget=forms.Select(choices=ca,
-        #                                                            attrs={'style': 'max-width: 100%'}))
-
-        #self.fields['mestesso'] = forms.ChoiceField(widget=forms.CheckboxInput(attrs={'class':'form-control form-check-input'}))
-        #self.fields['magazzino'] = forms.ChoiceField(widget=forms.CheckboxInput(attrs={'class':'form-control form-check-input'}))
-
-            #cz = Cliente.objects.filter(azienda_id=self.azienda).values_list('id', 'codcf')
-            #self.fields['cliente'] = forms.CharField(label="Cliente", required=True,
-            #                                        widget=forms.Select(choices=cz,
-            #                                                            attrs={'style': 'width: 300px;'}))
-        #self.fields['data_ordine'] =  forms.CharField(label="Descrizione", required=True,
-            #                                             widget=forms.Textarea(attrs={'rows': 2}))
-        #else:
-    """
-    def clean_cliente_id(self):
-        cliente_id = self.cleaned_data.get('cliente')
-        try:
-            self.cliente = Cliente.objects.get(pk=cliente_id)
-        except Cliente.DoesNotExist:
-            raise forms.ValidationError('Sorry, that course id is not valid.')
-
-        return cliente_id
-    
-    
-    def save(self, commit=True):
-
-        instance = super(FormCantiere, self).save(commit=commit)
-        #cl = Cliente.objects.get(pk=1) #instance.cliente)
-        #instance.cliente = cl
         
-        instance.save()
-        return instance
-    
-    """

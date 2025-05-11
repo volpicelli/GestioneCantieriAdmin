@@ -365,7 +365,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
 
 );
 
-    const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    //const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
 
 
     function onCancel() { 
@@ -393,7 +393,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
         }
         
         $('#smartwizard').smartWizard("unsetState", [3], 'error');
-        myModal.show();
+        //myModal.show();
       }
     }
 
@@ -410,7 +410,7 @@ $( "#createuserazienda" ).on( "submit", function(ev) {
       document.getElementById("form-4").reset();
       document.getElementById("form-5").reset();
 
-      myModal.hide();
+      //myModal.hide();
     }
 
     function showConfirm() {
