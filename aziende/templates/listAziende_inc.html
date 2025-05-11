@@ -34,8 +34,12 @@
   <td>{{one.email}}</td>
   <td> {{one.cgc_aziende.all.0.cognome}}
   </td>
-  <td>{{one.aziendauser.all.0.user}}</td>
+  <td>{% for a in one.aziendauser.all %}
+    {{a.user}}<br>
+    {% endfor %}
+   </td>
   <!--
+    {{one.aziendauser.all.0.user}}
   <td> 
     
     <button onclick="aggiungiAzienda({{one.id}})" type="button" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aggiungi Azienda"><i class="bi bi-plus-circle"></i></button>
