@@ -4,7 +4,7 @@ from django.template import loader
 from django.template import Template, Context
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from home.models import Azienda,UsersAzienda,Fornitori,ClientiGestioneCantieri
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 
 """
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -170,7 +170,7 @@ class CreateUserAzienda(View):
 
         user = User.objects.create_user(username=username, password=password)
         user.save()
-        group_azienda = Group.objects.get(name="Azienda")
+        group_azienda = Group.objects.get(name="Aziende")
         user.groups.add(group_azienda)
         user.save()
 

@@ -4,6 +4,8 @@
   {{ block.super }}
 
   <link href="{% static 'dist/css/smart_wizard_all.css' %}" rel="stylesheet" type="text/css" />
+  <link href="{% static 'chosen/chosen.css' %}" rel="stylesheet" type="text/css" />
+
 
   <style>
 .autocomplete {
@@ -77,8 +79,172 @@ label.valid {
 <script type="text/javascript" src="{% static  'jquery_validator/dist/jquery.validate.min.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/localization/messages_it.js' %}"></script>
 <script type="text/javascript" src="{% static  'jquery_validator/dist/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="{% static  'chosen/chosen.jquery.min.js' %}"></script>
 
 <script type="text/javascript">
+
+
+$('#selectazienda').on('change', function() {
+  //alert( $( "#selectazienda option:selected" ).text());
+  
+  $("#nomeaziendafornitore").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendafornitore").val(this.value);
+  $("#nomeaziendabancafornitore").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendabancafornitore").val(this.value);
+  $("#nomeaziendacodpag").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendacodpag").val(this.value);
+  
+  $("#nomeaziendacliente").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendacliente").val(this.value);
+
+  
+});
+
+$(".chosen-select").chosen({width: "95%"})
+
+
+$( "#form-condpag" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  //alert( "CLIENTI");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggiocodpag").html(jresponse['messaggio'])
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+$( "#form-bancafornitori" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  //alert( "CLIENTI");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggiobancafornitori").html(jresponse['messaggio'])
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+
+$( "#form-clienti" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  alert( "CLIENTI");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggioclienti").html(jresponse['messaggio'])
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+
+$( "#form-fornitori" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  alert( "POLLO");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggiofornitori").html(jresponse['messaggio'])
+
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+
+
+
 
 const searchInput = document.getElementById('searchInput');
 const searchInputID = document.getElementById('searchInputID');
@@ -246,7 +412,7 @@ function addAzienda2UserForm(codcf,id){
               + codcf +
               '<label class="form-check-label" for="aziendaCheck1"> \
               </label> \
-              <input name="azienda" class="form-check-input" value="'+id+'" type="checkbox" id="aziendaCheck1"> \
+              <input name="azienda" class="form-check-input" value="'+id+'" type="checkbox" checked id="aziendaCheck1"> \
             </div>'
             console.log("HTML",html)
   $('#listaaziende').append(html)
@@ -276,7 +442,10 @@ $( "#nuovocliente" ).on( "submit", function(ev) {
       //$("#clienteinserito").html(ss[0]['fields']['cognome'])
       //$("#inputcliente").val(ss[0]['pk'])
       //$(".sceglicliente").addClass('d-none');
-      
+
+      ////that.goForward;
+      $("#smartwizard").smartWizard("next");
+
 
       console.log(nuovocliente)
 
@@ -338,31 +507,32 @@ $( "#insertazienda" ).on( "submit", function(ev) {
 
 $( "#createuserazienda" ).on( "submit", function(ev) {
   ev.preventDefault()
-  alert( "POLLO");
- 
-  $.ajax({
+  //alert( "POLLO");
+    if ( $("#createuserazienda").valid() ){
+      $.ajax({
 
-    url: "/createuserazienda",
-    type: 'POST',
-    data: $('#createuserazienda').serialize(),
-    // on success response function
-    success: function(jresponse) {
-      // log response
-      console.log(jresponse);
-    },
-    // on fail response function
-    error: function() {
-      // console err
-      console.log(" error"); 
-    },
-    }).done(function(){
-        // now show the modal
-        console.log("FATTO")
-        //window.location='/personale'
-    });
+        url: "/createuserazienda",
+        type: 'POST',
+        data: $('#createuserazienda').serialize(),
+        // on success response function
+        success: function(jresponse) {
+          // log response
+          console.log(jresponse);
+          $("#smartwizard").smartWizard("next");
+
+        },
+        // on fail response function
+        error: function() {
+          // console err
+          console.log(" error"); 
+        },
+        }).done(function(){
+            // now show the modal
+            console.log("FATTO")
+            //window.location='/personale'
+        });
+    }
 }
-
-
 );
 
     //const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));

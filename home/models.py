@@ -17,25 +17,24 @@ class Azienda(models.Model):
     avatar = models.ImageField(upload_to=set_path,null=True,blank=True)
     codcf = models.CharField(max_length=60, blank=True, null=True)#,unique=True)
     #current = models.BooleanField(null=True,default=False)
-    descrizione = models.TextField(blank=True, null=True)
-    ragione_sociale = models.CharField(max_length=100, blank=True, null=True)
+    ragione_sociale = models.TextField( blank=True, null=True)
     indirizzo = models.CharField(max_length=100,blank=True, null=True)
     cap = models.CharField(max_length=20,blank=True, null=True)
     local = models.CharField(max_length=40,blank=True, null=True)
     prov = models.CharField(max_length=40,blank=True, null=True)
     codfisc = models.CharField(max_length=40,blank=True, null=True)
     partiva = models.CharField(max_length=40,blank=True, null=True)
+    descrizione = models.TextField(blank=True, null=True)
     telefono = models.CharField(max_length=40, blank=True, null=True)
     cellulare = models.CharField(max_length=40, blank=True, null=True)
-    pec = models.CharField(max_length=40, blank=True, null=True)
+    pec = models.CharField(max_length=60, blank=True, null=True)
     fax = models.CharField(max_length=40, blank=True, null=True)
-    email = models.CharField(max_length=40, blank=True, null=True)
-    resprap = models.CharField(max_length=40, blank=True, null=True)
+    email = models.CharField(max_length=60, blank=True, null=True)
+    resprap = models.CharField(max_length=60, blank=True, null=True)
     fmemo = models.TextField( blank=True, null=True)
     nome_pf = models.CharField(max_length=40, blank=True, null=True)
     cogn_pf = models.CharField(max_length=40, blank=True, null=True)
-    #banca = models.CharField(max_length=40,blank=True, null=True)
-    #iban = models.CharField(max_length=40,blank=True, null=True)
+
     def __str__(self):
         return self.nome
 
@@ -127,6 +126,7 @@ class CondizioniPagamento(models.Model):
     tiposcad = models.CharField(max_length=3, blank=True, null=True)
     ggfixant = models.CharField(max_length=3, blank=True, null=True)
     ggdopofm = models.IntegerField(blank=True, null=True)
+    desc_payment_type = models.CharField(max_length=60, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -150,7 +150,8 @@ class Fornitori(models.Model):
 #    clfr = models.CharField(max_length=2, choices=ClienteFornitore.choices,
 #        default=ClienteFornitore.CLIENTE, blank=True, null=True)
     codcf = models.CharField(max_length=60, blank=True, null=True)#,unique=True)
-    ragione_sociale = models.CharField(max_length=100, blank=True, null=True)
+    sdi = models.CharField(max_length=20, blank=True, null=True)
+    ragione_sociale = models.TextField( blank=True, null=True)
     indirizzo = models.CharField(max_length=100,blank=True, null=True)
     cap = models.CharField(max_length=20,blank=True, null=True)
     local = models.CharField(max_length=40,blank=True, null=True)
@@ -164,9 +165,9 @@ class Fornitori(models.Model):
 
     telefono = models.CharField(max_length=40, blank=True, null=True)
     cellulare = models.CharField(max_length=40, blank=True, null=True)
-    pec_fe = models.CharField(max_length=40, blank=True, null=True)
+    pec_fe = models.CharField(max_length=80, blank=True, null=True)
     fax = models.CharField(max_length=40, blank=True, null=True)
-    email = models.CharField(max_length=40, blank=True, null=True)
+    email = models.CharField(max_length=80, blank=True, null=True)
     resprap = models.CharField(max_length=40, blank=True, null=True)
     fmemo = models.TextField( blank=True, null=True)
     nome_pf = models.CharField(max_length=40, blank=True, null=True)
@@ -232,8 +233,11 @@ class Cliente(models.Model):
 
 #    clfr = models.CharField(max_length=2, choices=ClienteFornitore.choices,
 #        default=ClienteFornitore.CLIENTE, blank=True, null=True)
+
+
     codcf = models.CharField(max_length=60, blank=True, null=True)#,unique=True)
-    ragione_sociale = models.CharField(max_length=100, blank=True, null=True)
+    sdi = models.CharField(max_length=20, blank=True, null=True)
+    ragione_sociale = models.TextField( blank=True, null=True)
     indirizzo = models.CharField(max_length=100,blank=True, null=True)
     cap = models.CharField(max_length=20,blank=True, null=True)
     local = models.CharField(max_length=40,blank=True, null=True)
@@ -241,12 +245,12 @@ class Cliente(models.Model):
     codfisc = models.CharField(max_length=40,blank=True, null=True)
     partiva = models.CharField(max_length=40,blank=True, null=True)
     persoc = models.CharField(max_length=2,blank=True, null=True,choices=PersonaSocieta.choices)
-
+    codpag = models.ForeignKey(CondizioniPagamento,null=True,on_delete=models.CASCADE,related_name='codpagcliente',to_field='codpag')
     telefono = models.CharField(max_length=40, blank=True, null=True)
     cellulare = models.CharField(max_length=40, blank=True, null=True)
-    pec_fe = models.CharField(max_length=40, blank=True, null=True)
+    pec_fe = models.CharField(max_length=80, blank=True, null=True)
     fax = models.CharField(max_length=40, blank=True, null=True)
-    email = models.CharField(max_length=40, blank=True, null=True)
+    email = models.CharField(max_length=80, blank=True, null=True)
     fmemo = models.TextField( blank=True, null=True)
     nome_pf = models.CharField(max_length=40, blank=True, null=True)
     cogn_pf = models.CharField(max_length=40, blank=True, null=True)
@@ -444,12 +448,11 @@ class Articoli(models.Model):
 class Magazzino(models.Model):
     quantita_impegnata = models.IntegerField(blank=True, null=True,default=0)
     quantita_inarrivo = models.IntegerField(blank=True, null=True,default=0)
-    quantita = models.IntegerField(blank=True, null=True)
+    quantita = models.IntegerField(blank=True, null=True,default=0)
     descrizione = models.TextField(blank=True, null=True)
-    quantita = models.IntegerField(blank=True, null=True)
     prezzo_unitario = models.FloatField(blank=True,null=True,default=0.0)
     importo_totale = models.FloatField(blank=True,null=True,default=0.0) 
-    ordine = models.ForeignKey(Ordine,null=True,on_delete=models.CASCADE,related_name='ordine_magazzino')
+    #ordine = models.ForeignKey(Ordine,null=True,on_delete=models.CASCADE,related_name='ordine_magazzino')
     azienda = models.ForeignKey(Azienda,null=True,on_delete=models.CASCADE,related_name='azienda_magazzino')
 
     class Meta:

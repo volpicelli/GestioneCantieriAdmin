@@ -1,104 +1,106 @@
-
 <main id="main" class="main">
 
   <div class="pagetitle">
     <h1>Carica Anagrafica Fornitori/Clienti per Azienda </h1>
-    
+
   </div><!-- End Page Title -->
 
 
-<br /> &nbsp;
+  <br /> &nbsp;
 
 
 
-<section class="section">
-  <p>Carica i fornitori e clienti in formato Excel</p>    
+  <section class="section">
+    <p>Carica i fornitori e clienti in formato Excel</p>
 
-  <div class="row">
-    <div class="col-6">
-      Scegli l'Azienda in cui caricare l'anagrafica dei Fornitori e Clienti 
-    </div>
-    <div class="col-4 d-flex align-items-center">
+    <div class="row">
+      <div class="col-6">
+        Scegli l'Azienda in cui caricare l'anagrafica dei Fornitori e Clienti
+      </div>
+      <div class="col-4 d-flex align-items-center">
 
-      <select id="selectazienda" name="azienda" data-placeholder="Scegli Azienda..." class="chosen-select form-control"  tabindex="4">
-        <option> </option>
-        {% for a in aziende %}
+        <select id="selectazienda" name="azienda" data-placeholder="Scegli Azienda..."
+          class="chosen-select form-control" tabindex="4">
+          <option> </option>
+          {% for a in aziende %}
           <option value="{{a.id}}">{{a.nome}}</option>
-        {% endfor %}
-      </select>  
+          {% endfor %}
+        </select>
 
+      </div>
     </div>
-  </div>
- 
-    <form id="form-fornitori" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation" enctype='multipart/form-data' novalidate>
+
+    <form id="form-fornitori" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+      enctype='multipart/form-data' novalidate>
       {% csrf_token %}
-     
+
 
       <div class="row mt-4">
         <div class="col-5">
           <label for="filefornitori" class="form-label">Fornitori</label>
-          <input type="file" name="file" class="form-control" id="filefornitori"  required="">
+          <input type="file" name="file" class="form-control" id="filefornitori" required="">
           <div id="messaggiofornitori" class="valid-feedback">
             Looks good!
           </div>
-          
+
           <div class="invalid-feedback">
             Seleziona un file excel .
           </div>
         </div>
         <div class="col-3">
-        
-          <br/>
-           <span id="nomeaziendafornitore" class="align-middle"></span>
-           <input id="idaziendafornitore" type="hidden" name="azienda" value="">
-           <input  type="hidden" name="tabella" value="fornitori">
-          </div>
-        
+
+          <br />
+          <span id="nomeaziendafornitore" class="align-middle"></span>
+          <input id="idaziendafornitore" type="hidden" name="azienda" value="">
+          <input type="hidden" name="tabella" value="fornitori">
+        </div>
+
         <div class="col-4">
-          <br/>
+          <br />
 
           <button type="submit" class="btn btn-primary btn-sm">Carica</button>
           <button type="reset" class="btn btn-warning btn-sm">RESET</button>
-          </div>
+        </div>
       </div>
     </form>
-  
-    <form id="form-clienti" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation" enctype='multipart/form-data' novalidate>
+
+    <form id="form-clienti" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+      enctype='multipart/form-data' novalidate>
       {% csrf_token %}
       <div class="row">
 
-          <div class="col-5">
-              <label for="fileclienti" class="form-label">Clienti</label>
-              <input type="file" name="file" class="form-control" id="fileclienti" placeholder="1234 Main St" required="">
-          
-              <div id="messaggioclienti" class="valid-feedback">
-              Looks good!
-              </div>
-            
-              <div class="invalid-feedback">
-                Seleziona un file excel .
-              </div>
+        <div class="col-5">
+          <label for="fileclienti" class="form-label">Clienti</label>
+          <input type="file" name="file" class="form-control" id="fileclienti" placeholder="1234 Main St" required="">
+
+          <div id="messaggioclienti" class="valid-feedback">
+            Looks good!
           </div>
-          <div class="col-3">
-        
-            <br/>
-             <span id="nomeaziendacliente" class="align-middle"></span>
-            <input id="idaziendacliente" type="hidden" name="azienda" value="">
-            <input  type="hidden" name="tabella" value="clienti">
-        
+
+          <div class="invalid-feedback">
+            Seleziona un file excel .
           </div>
-          <div class="col-4">
-            <br/>
-            <button type="submit" class="btn btn-primary btn-sm">Carica</button>
-            <button type="reset" class="btn btn-warning btn-sm">RESET</button>
-          </div>
+        </div>
+        <div class="col-3">
+
+          <br />
+          <span id="nomeaziendacliente" class="align-middle"></span>
+          <input id="idaziendacliente" type="hidden" name="azienda" value="">
+          <input type="hidden" name="tabella" value="clienti">
+
+        </div>
+        <div class="col-4">
+          <br />
+          <button type="submit" class="btn btn-primary btn-sm">Carica</button>
+          <button type="reset" class="btn btn-warning btn-sm">RESET</button>
+        </div>
       </div>
 
-    </form>  
+    </form>
     <div class="row align-items-top">
-      
+
     </div>
 
-</section>
+  </section>
 
 </main><!-- End #main -->

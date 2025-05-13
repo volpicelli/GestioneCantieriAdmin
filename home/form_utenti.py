@@ -22,6 +22,7 @@ class FormUtenti(forms.ModelForm):
         self.fields['password']=forms.CharField(widget=forms.PasswordInput(attrs={'id':'password', 'required':True})) #,label='', required=False)
         self.fields['email']=forms.CharField(widget=forms.EmailInput(attrs={'id':'emailutenti', 'required':True})) #,label='', required=False)
         self.fields['last_name']=forms.CharField(widget=forms.TextInput(attrs={'id':'last_name', 'required':True})) #,label='', required=False)
+        self.fields['username']=forms.CharField(widget=forms.TextInput(attrs={'id':'username', 'required':True})) #,label='', required=False)
         #self.fields['email']= orms.EmailField(widget=forms.EmailInput(attrs={'class': 'forms-group__input'}))
         #self.fields['email'].widgets.attrs['id'] = 'pollo'
         for field in self.fields.values():

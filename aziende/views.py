@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect,JsonResponse
 
-from home.models import Azienda,Fornitori,Cliente
+from home.models import Azienda,Fornitori,Cliente,BancaFornitori,CondizioniPagamento
 from home.form_aziende import FormAzienda
 from django.views.generic.list import ListView,View
 from django.views.generic.edit import CreateView,UpdateView
@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from openpyxl import load_workbook
 from openpyxl.workbook import Workbook
+import json
 # Create your views here.
 
 class AziendeList(ListView):
@@ -135,16 +136,113 @@ class LoadFornitori(View):
 
         res2={}
         res2['file']=file.name
-        res2['post']=res
+        #res2['post']=res
         file_uploaded = request.FILES.get('file')
         tabella = request.POST.get('tabella')
-        azienda = request.POST.get('azienda')
 
         if file_uploaded:
-            #filename = self.handle_uploaded_file(request.POST,request.FILES.get('file'))
+            data = json.loads(file_uploaded.read())
+            if tabella == 'condizionipagamento':
+                try:
+                    cp=CondizioniPagamento.objects.all()
+                except:
+                    cp=None
+                if len(cp)>1:
+                    res2['messaggio']= "Condizioni di pagamento sono gia` presenti"
+                    return JsonResponse(res2,safe=False)
 
-            #readFile = file_uploaded.read()
-            work_book = load_workbook(file_uploaded)#.temporary_file_path())
+                for one in data:
+                    c = CondizioniPagamento(**one)
+                    c.save()
+
+                res2['messaggio']= "Condizioni di pagamento caricati con successo"
+                return JsonResponse(res2,safe=False)   
+            if tabella == 'bancafornitori':
+                azienda = request.POST.get('azienda')
+                """
+                try:
+                    bfa=BancaFornitori.objects.all()
+                except:
+                    bfa=None
+                if len(bfa)>1:
+                    res2['messaggio']= "Banca fornitori sono gia` presenti"
+                    return JsonResponse(res2,safe=False)
+                """
+                for one in data:
+
+                    try:
+                        forn = Fornitori.objects.filter(azienda_id=azienda)
+                    except:
+                        forn = None
+                        res2['messaggio']= "Nessun fornitore trovato per l'azienda selezionata"
+                        return JsonResponse(res2,safe=False)
+                    if len(forn) ==0 :
+                        res2['messaggio']= "Nessun fornitore trovato per l'azienda selezionata"
+                        return JsonResponse(res2,safe=False)
+
+                    try:
+                        f = forn.get(codcf=one['codfor'])  # Fornitore 
+                    except:
+                        f = None
+            
+
+                    bf = BancaFornitori(**one)
+                    if f:
+                        bf.fornitore_id=f.id
+                    else:
+                        bf.fornitore_id=f
+                    #print(one)
+                    bf.save()
+                res2['messaggio']= "Banche Fornitori  caricati con successo"
+                return JsonResponse(res2,safe=False)   
+            if tabella == 'fornitori':
+                azienda = request.POST.get('azienda')
+
+                for one in data:
+                    one.pop('azienda')
+                    try:
+                        codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
+                    except: 
+                        codpag = None
+                    one.pop('codpag')
+                    one['azienda_id']=azienda
+                    f = Fornitori(**one)
+                    f.codpag=codpag
+                    f.save()
+                res2['messaggio']= "Caricamento avvenuto con successo di "+str(len(data))+" records"
+                return JsonResponse(res2,safe=False)
+            if tabella == 'clienti':
+                azienda = request.POST.get('azienda')
+
+                for one in data:
+                    one.pop('azienda')
+                    try:
+                        codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
+                    except: 
+                        codpag = None
+                    #one.pop('codpag')
+                    one['azienda_id']=azienda
+                    f = Cliente(**one)
+                    f.codpag=codpag
+                    f.save()
+                res2['messaggio']= "Caricamento avvenuto con successo di "+str(len(data))+" records"
+                return JsonResponse(res2,safe=False)
+                    
+            #try:
+            #    codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
+            #except: 
+            #    codpag = None
+            #one.pop('codpag')
+#
+            #f = Cliente(**one)
+            #f.codpag=codpag
+            #one['codpag'] = codpag
+            #print(one)
+            #f.save()
+
+
+            """
+            work_book = load_workbook(file_uploaded)
             events_sheet = work_book.active 
             # Get fields name array 
             fieldnames=[]
@@ -152,22 +250,20 @@ class LoadFornitori(View):
             for line in range(1,2): # events_sheet.max_row+1):
                 for col in events_sheet.iter_cols(1, events_sheet.max_column):
                     fieldnames.append(col[line].value)
-                    #res2['fieldnames'].append(fieldnames)
-
-                    #print(col[line].value)
-            #print("FIELDS",fieldnames)
+                    
             items=[]
             for line in range(2, events_sheet.max_row):
                 idxcol=0
                 row={'azienda_id':azienda}
                 for col in events_sheet.iter_cols(1, events_sheet.max_column):
-                    #print(fields[idxcol],'=',col[line].value)
                     row[fieldnames[idxcol]]=col[line].value
                     idxcol+=1
 
                 print(row)
                 items.append(row)
+            """
 
+            """
             if tabella == 'fornitori':
                 for one in items:
                     f = Fornitori(**one)
@@ -176,6 +272,6 @@ class LoadFornitori(View):
                 for one in items:
                     c = Cliente(**one)
                     c.save()
-        res2['messaggio']= "Caricamento avvenuto con successo di "+str(len(items))+" records"
-        return JsonResponse(res2,safe=False)
+            """
+        
 
