@@ -82,6 +82,75 @@ label.valid {
 <script type="text/javascript">
 
 
+$( "#form-condpag" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  //alert( "CLIENTI");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggiocodpag").html(jresponse['messaggio'])
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+$( "#form-bancafornitori" ).on( "submit", function(ev) {
+  ev.preventDefault()
+  //alert( "CLIENTI");
+  
+  $.ajax({
+
+    url: "/aziende/loadfornitori",
+    type: 'POST',
+    //dataType: "json",
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: new FormData(this), //$('#inser
+    success: function(jresponse) {
+      // log response
+      console.log("VAI",jresponse);
+      $("#messaggiobancafornitori").html(jresponse['messaggio'])
+      //addAzienda2UserForm(jresponse['codcf'],jresponse['id'])
+      //addAziendeInserite(jresponse['codcf'])
+
+
+    },
+    // on fail response function
+    error: function() {
+      console.log(" error"); 
+    },
+    }).done(function(){
+        console.log("FATTO")
+    });
+  //}
+  
+
+})
+
+
 $( "#form-clienti" ).on( "submit", function(ev) {
   ev.preventDefault()
   alert( "CLIENTI");
@@ -115,9 +184,6 @@ $( "#form-clienti" ).on( "submit", function(ev) {
   
 
 })
-
-
-
 
 
 $( "#form-fornitori" ).on( "submit", function(ev) {
@@ -158,13 +224,24 @@ $( "#form-fornitori" ).on( "submit", function(ev) {
 
 
 
+
 $('#selectazienda').on('change', function() {
   //alert( $( "#selectazienda option:selected" ).text());
   
+
   $("#nomeaziendafornitore").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
   $("#idaziendafornitore").val(this.value);
+  $("#nomeaziendabancafornitore").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendabancafornitore").val(this.value);
+  $("#nomeaziendacodpag").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
+  $("#idaziendacodpag").val(this.value);
+  
   $("#nomeaziendacliente").html("<b> per Azienda " + $( "#selectazienda option:selected" ).text()+"</b>");
   $("#idaziendacliente").val(this.value);
+
+
+
+  
 
   
 });

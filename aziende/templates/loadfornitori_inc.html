@@ -11,48 +11,91 @@
 
 
   <section class="section">
-    <p>Carica i fornitori e clienti in formato Excel</p>
-
-    <div class="row">
-      <div class="col-6">
-        Scegli l'Azienda in cui caricare l'anagrafica dei Fornitori e Clienti
+    
+      <p>Carica i fornitori e clienti in formato Json</p>
+  
+      <div class="row">
+        <div class="col-6">
+          Scegli l'Azienda in cui caricare l'anagrafica dei Fornitori e Clienti
+        </div>
+        <div class="col-4 d-flex align-items-center">
+  
+          <select id="selectazienda" name="azienda" data-placeholder="Scegli Azienda..."
+            class="chosen-select form-control" tabindex="4">
+            <option> </option>
+            {% for a in aziende %}
+            <option value="{{a.id}}">{{a.nome}}</option>
+            {% endfor %}
+          </select>
+  
+        </div>
       </div>
-      <div class="col-4 d-flex align-items-center">
 
-        <select id="selectazienda" name="azienda" data-placeholder="Scegli Azienda..."
-          class="chosen-select form-control" tabindex="4">
-          <option> </option>
-          {% for a in aziende %}
-          <option value="{{a.id}}">{{a.nome}}</option>
-          {% endfor %}
-        </select>
+      <!-- INSERT CONDIZIONI PAGAMENTO -->
+  
+      <form id="form-condpag" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+        enctype='multipart/form-data' novalidate>
+        {% csrf_token %}
+  
+  
+        <div class="row mt-4">
+          <div class="col-5">
+            <label for="filecodpag" class="form-label">Condizioni Pagamento</label>
+            <input type="file" name="file" class="form-control" id="filecodpag" required="">
+            <div id="messaggiocodpag" class="valid-feedback">
+              Looks good!
+            </div>
+  
+            <div class="invalid-feedback">
+              Seleziona un file Json.
+            </div>
+          </div>
+          <div class="col-3">
+  
+            <br />
+            
+            <span id="nomeaziendacodpag" class="align-middle"></span>
+            <input id="idaziendacodpag" type="hidden" name="azienda" value="">
+            
+            <input type="hidden" name="tabella" value="condizionipagamento">
+          </div>
+  
+          <div class="col-4">
+            <br />
+  
+            <button type="submit" class="btn btn-primary btn-sm">Carica</button>
+            <button type="reset" class="btn btn-warning btn-sm">RESET</button>
+          </div>
+        </div>
+      </form>
 
-      </div>
-    </div>
 
-    <form id="form-fornitori" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+      <!-- INSERT BANCA FORNITORI -->      
+      <form id="form-bancafornitori" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
       enctype='multipart/form-data' novalidate>
       {% csrf_token %}
 
 
       <div class="row mt-4">
         <div class="col-5">
-          <label for="filefornitori" class="form-label">Fornitori</label>
-          <input type="file" name="file" class="form-control" id="filefornitori" required="">
-          <div id="messaggiofornitori" class="valid-feedback">
+          <label for="filebancafornitori" class="form-label">Banche Fornitori</label>
+          <input type="file" name="file" class="form-control" id="filebancafornitori" required="">
+          <div id="messaggiobancafornitori" class="valid-feedback">
             Looks good!
           </div>
 
           <div class="invalid-feedback">
-            Seleziona un file excel .
+            Seleziona un file Json .
           </div>
         </div>
         <div class="col-3">
 
           <br />
-          <span id="nomeaziendafornitore" class="align-middle"></span>
-          <input id="idaziendafornitore" type="hidden" name="azienda" value="">
-          <input type="hidden" name="tabella" value="fornitori">
+          
+          <span id="nomeaziendabancafornitore" class="align-middle"></span>
+          <input id="idaziendabancafornitore" type="hidden" name="azienda" value="">
+          
+          <input type="hidden" name="tabella" value="bancafornitori">
         </div>
 
         <div class="col-4">
@@ -64,42 +107,82 @@
       </div>
     </form>
 
-    <form id="form-clienti" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
-      enctype='multipart/form-data' novalidate>
-      {% csrf_token %}
-      <div class="row">
 
-        <div class="col-5">
-          <label for="fileclienti" class="form-label">Clienti</label>
-          <input type="file" name="file" class="form-control" id="fileclienti" placeholder="1234 Main St" required="">
-
-          <div id="messaggioclienti" class="valid-feedback">
-            Looks good!
+      <form id="form-fornitori" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+        enctype='multipart/form-data' novalidate>
+        {% csrf_token %}
+  
+  
+        <div class="row mt-4">
+          <div class="col-5">
+            <label for="filefornitori" class="form-label">Fornitori</label>
+            <input type="file" name="file" class="form-control" id="filefornitori" required="">
+            <div id="messaggiofornitori" class="valid-feedback">
+              Looks good!
+            </div>
+  
+            <div class="invalid-feedback">
+              Seleziona un file excel .
+            </div>
           </div>
-
-          <div class="invalid-feedback">
-            Seleziona un file excel .
+          <div class="col-3">
+  
+            <br />
+            <span id="nomeaziendafornitore" class="align-middle"></span>
+            <input id="idaziendafornitore" type="hidden" name="azienda" value="">
+            <input type="hidden" name="tabella" value="fornitori">
+          </div>
+  
+          <div class="col-4">
+            <br />
+  
+            <button type="submit" class="btn btn-primary btn-sm">Carica</button>
+            <button type="reset" class="btn btn-warning btn-sm">RESET</button>
           </div>
         </div>
-        <div class="col-3">
-
-          <br />
-          <span id="nomeaziendacliente" class="align-middle"></span>
-          <input id="idaziendacliente" type="hidden" name="azienda" value="">
-          <input type="hidden" name="tabella" value="clienti">
-
+      </form>
+  
+      <form id="form-clienti" method="POST" class="row row-cols-1 ms-5 me-5 needs-validation"
+        enctype='multipart/form-data' novalidate>
+        {% csrf_token %}
+        <div class="row">
+  
+          <div class="col-5">
+            <label for="fileclienti" class="form-label">Clienti</label>
+            <input type="file" name="file" class="form-control" id="fileclienti" placeholder="1234 Main St" required="">
+  
+            <div id="messaggioclienti" class="valid-feedback">
+              Looks good!
+            </div>
+  
+            <div class="invalid-feedback">
+              Seleziona un file excel .
+            </div>
+          </div>
+          <div class="col-3">
+  
+            <br />
+            <span id="nomeaziendacliente" class="align-middle"></span>
+            <input id="idaziendacliente" type="hidden" name="azienda" value="">
+            <input type="hidden" name="tabella" value="clienti">
+  
+          </div>
+          <div class="col-4">
+            <br />
+            <button type="submit" class="btn btn-primary btn-sm">Carica</button>
+            <button type="reset" class="btn btn-warning btn-sm">RESET</button>
+          </div>
         </div>
-        <div class="col-4">
-          <br />
-          <button type="submit" class="btn btn-primary btn-sm">Carica</button>
-          <button type="reset" class="btn btn-warning btn-sm">RESET</button>
-        </div>
+  
+      </form>
+      <div class="row align-items-top">
+  
       </div>
-
-    </form>
-    <div class="row align-items-top">
-
-    </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+ 
 
   </section>
 

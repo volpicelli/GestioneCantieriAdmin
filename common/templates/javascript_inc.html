@@ -33,12 +33,12 @@ crossorigin="anonymous"></script>
 
     $('#sidebar').find('a').on('click', function (ev) { 
       console.log("pollo",$(this).parent())
-      //CURRENT_URL = window.location.href.split('#')[0].split('?')[0];
-      //var pathname = new URL(CURRENT_URL).pathname;
+      CURRENT_URL = window.location.href.split('#')[0].split('?')[0];
+      var pathname = new URL(CURRENT_URL).pathname;
 
-      //console.log(pathname);
-      //console.log(CURRENT_URL);
-      //$('#sidebar').find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('active');
-      //$(this).addClass('active')
+      console.log("ONCLICK",pathname);
+      console.log("ONCLICK CU",CURRENT_URL);
+      $('#sidebar').find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('active');
+      $(this).addClass('active')
     })
   </script>

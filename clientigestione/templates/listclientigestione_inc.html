@@ -36,17 +36,22 @@
     {% endfor %}
   </td>
   <td>
-    {% for a in one.aziende.all %}
-     <a href="" >{{a.nome}} </a> &nbsp;&nbsp;
+     <ul style="list-style-type: none; padding-left: 0px;">
+        {% for a in one.aziende.all %}
+				<li> <div class="row"> <div class="col-6">  <a href="" >{{a.nome}} </a>  </div> <div class="col-2 ">
+          <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Elimina/Dissocia Azienda"
+               style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .55rem;">
+                <b>X</b>
+          </button>
+              </div>
+            </div> 
+        </li> 
+					 {% endfor %}
+				</ul>
+
+
 
     
-
-     <button type="button" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Dissocia Azienda"
-        style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .55rem;">
-       <b>X</b>
-</button>
-<br>
-      {% endfor %} 
   </td>
   <td> 
     

@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from openpyxl import load_workbook
 from openpyxl.workbook import Workbook
-import json
+import json,os
 # Create your views here.
 
 class AziendeList(ListView):
@@ -139,7 +139,10 @@ class LoadFornitori(View):
         #res2['post']=res
         file_uploaded = request.FILES.get('file')
         tabella = request.POST.get('tabella')
-
+        extension = os.path.splitext(file_uploaded.name)[1]
+        if 'json' not in extension:
+            res2['messaggio']= "File non valido, caricare un file json"
+            return JsonResponse(res2,safe=False)
         if file_uploaded:
             data = json.loads(file_uploaded.read())
             if tabella == 'condizionipagamento':

@@ -19,22 +19,38 @@
         <th>Cognome</th>
         <th>Nome</th>
         <th>Email</th>
-        <th>Azienda</th>
+        <th> Azienda</th>
+        <th></th>
     </tr>
 </thead>
 <tbody>
 {% for one in users %}
 <tr>
-  <td>{{one.username}}</td>
-  <td> {{one.last_name}}</td>
-  <td> {{one.first_name}}</td>
-  <td> {{one.email}}</td>
-  <td>{% for ua in one.userazienda.all %}
-      
-      <a href="" >  {{ua.azienda}} </a> <br>
-   
-    {% endfor %}
+  <td >{{one.username}}</td>
+  <td > {{one.last_name}}</td>
+  <td > {{one.first_name}}</td>
+  <td > {{one.email}}</td>
+    
+    <td>
+      <ul style="list-style-type: none; padding-left: 0px;">
+        {% for ua in one.userazienda.all %}
+				<li> <div class="row"> <div class="col-6"> {{ua.azienda}} </div> <div class="col-2 ">
+          <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Dissocia Utente da Azienda"
+               style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .55rem;">
+                <b>X</b>
+          </button>
+              </div>
+            </div> 
+        </li> 
+					 {% endfor %}
+				</ul>
+     </td>
+     
 
+  
+  <td> 
+    <button onclick="aggiungiAzienda({{one.id}})" type="button" class="btn btn-success btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Aggiungi Azienda ad Utente"><i class="bi bi-plus-circle"></i></button>
+    <button onclick="aggiungiAzienda({{one.id}})" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="Elimina Utente"><i class="bi bi-node-minus"></i></button>
 
   </td>
   
