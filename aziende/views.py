@@ -146,15 +146,18 @@ class LoadFornitori(View):
         if file_uploaded:
             data = json.loads(file_uploaded.read())
             if tabella == 'condizionipagamento':
+                azienda = request.POST.get('azienda')
+
                 try:
-                    cp=CondizioniPagamento.objects.all()
+                    cp=CondizioniPagamento.objects.filter(azienda_id=azienda)
                 except:
                     cp=None
                 if len(cp)>1:
-                    res2['messaggio']= "Condizioni di pagamento sono gia` presenti"
+                    res2['messaggio']= "Condizioni di pagamento sono gia` presenti per questa azienda"
                     return JsonResponse(res2,safe=False)
 
                 for one in data:
+                    one['azienda_id']=azienda
                     c = CondizioniPagamento(**one)
                     c.save()
 
