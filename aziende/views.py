@@ -152,7 +152,8 @@ class LoadFornitori(View):
                     cp=CondizioniPagamento.objects.filter(azienda_id=azienda)
                 except:
                     cp=None
-                if len(cp)>1:
+                if cp is not None and len(cp)>1:
+                #if len(cp)>1:
                     res2['messaggio']= "Condizioni di pagamento sono gia` presenti per questa azienda"
                     return JsonResponse(res2,safe=False)
 
