@@ -207,15 +207,23 @@ class LoadFornitori(View):
 
                 for one in data:
                     one.pop('azienda')
-                    try:
-                        codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
-                    except: 
+                   
+                    if one['codpag'] is not None or one['codpag'] =! '':
+                            #print("SKIP",one['codpag'])
+                            #continue
+                             try:
+                                codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
+                            except: 
+                                codpag = None
+                    else:
                         codpag = None
+                    
                     one.pop('codpag')
                     one['azienda_id']=azienda
-                    f = Fornitori(**one)
-                    f.codpag=codpag
-                    f.save()
+                    if len(one['ragione_sociale']) > 3 :
+                        f = Fornitori(**one)
+                        f.codpag=codpag
+                        f.save()
                 res2['messaggio']= "Caricamento avvenuto con successo di "+str(len(data))+" records"
                 return JsonResponse(res2,safe=False)
             if tabella == 'clienti':
