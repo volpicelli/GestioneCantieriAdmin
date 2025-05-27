@@ -207,18 +207,23 @@ class LoadFornitori(View):
 
                 for one in data:
                     one.pop('azienda')
-                   
-                    if one['codpag'] is not None or one['codpag'] =! '':
+
+                    if one['codpag'] is None or one['codpag'] == '':
                             #print("SKIP",one['codpag'])
-                            #continue
-                             try:
-                                codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
-                            except: 
-                                codpag = None
+                            continue
+                    #        gg = one['codpag']#.replace('"','')
                     else:
-                        codpag = None
-                    
+                            try:
+                                codpag = CondizioniPagamento.objects.get(codpag=one['codpag'])
+                            except:
+                                codpag = None
+                                res2['messaggio']= "Non Trovato codpag " + one['codpag']
+                                return JsonResponse(res2,safe=False)
+                    #else:
+                    #    codpag = None
+
                     one.pop('codpag')
+
                     one['azienda_id']=azienda
                     if len(one['ragione_sociale']) > 3 :
                         f = Fornitori(**one)
